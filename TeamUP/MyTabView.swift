@@ -10,14 +10,14 @@ import SwiftUI
 struct MyTabView: View {
     var body: some View {
         TabView {
-            GameSelector()
+            GameListView()
                 .tabItem {
                     Image(systemName: "list.bullet.circle")
                     Text("Games")
                         .font(.system(size: 12))
                 }
-                // TEST
-            MainScreen()
+            
+            MainScreenView()
                 .tabItem {
                     Image(systemName: "gamecontroller.circle")
                     Text("Match")
@@ -31,7 +31,7 @@ struct MyTabView: View {
                         .font(.system(size: 12))
                 }
             
-            MyProfileView()
+            MyUserView()
                 .tabItem {
                     Image(systemName: "person.circle")
                     Text("Profile")
@@ -40,30 +40,6 @@ struct MyTabView: View {
         }
         .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2))
         .preferredColorScheme(.dark) // Fuerza inicialmente el tema oscuro
-    }
-}
-
-struct GameSelector: View {
-    var body: some View {
-        Text("Game Selector")
-    }
-}
-
-struct MainScreen: View {
-    var body: some View {
-        Text("Main Screen")
-    }
-}
-
-struct ChatListView: View {
-    var body: some View {
-        Text("Chat List")
-    }
-}
-
-struct MyProfileView: View {
-    var body: some View {
-        Text("My Profile")
     }
 }
 
