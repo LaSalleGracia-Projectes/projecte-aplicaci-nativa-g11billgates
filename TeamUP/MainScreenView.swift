@@ -166,7 +166,7 @@ struct MainScreenView: View {
                             
                             // Botón Like mejorado
                             ActionButton(
-                                icon: "heart.fill",
+                                icon: "gamecontroller",
                                 color: Color(red: 0.9, green: 0.3, blue: 0.2),
                                 action: { swipeCard(direction: .right) }
                             )
