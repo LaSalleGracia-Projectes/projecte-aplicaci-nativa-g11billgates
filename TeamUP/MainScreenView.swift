@@ -16,13 +16,6 @@ struct MainScreenView: View {
             // Header mejorado
             HStack {
                 Spacer()
-                Text("Team")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(.white) +
-                Text("UP")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                Spacer()
                 
                 Button(action: {}) {
                     Image(systemName: "gearshape.fill")
@@ -32,6 +25,16 @@ struct MainScreenView: View {
                 }
                 .padding(.trailing, 20)
             }
+            .overlay(
+                HStack {
+                    Text("Team")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(.white) +
+                    Text("UP")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                }
+            )
             .frame(height: 50)
             .background(
                 Color.black.opacity(0.3)
