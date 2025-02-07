@@ -14,27 +14,31 @@ struct MyTabView: View {
                 .tabItem {
                     Image(systemName: "list.bullet.circle")
                     Text("Games")
+                        .font(.system(size: 12))
                 }
             
             MainScreen()
                 .tabItem {
                     Image(systemName: "gamecontroller.circle")
                     Text("Match")
+                        .font(.system(size: 12))
                 }
             
             ChatListView()
                 .tabItem {
                     Image(systemName: "bubble.circle")
                     Text("Chats")
+                        .font(.system(size: 12))
                 }
             
             MyProfileView()
                 .tabItem {
                     Image(systemName: "person.circle")
                     Text("Profile")
+                        .font(.system(size: 12))
                 }
         }
-        .accentColor(Color(red: 0.8, green: 0.2, blue: 0.2)) // Rojo claro elegante
+        .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2)) // Rojo más brillante y ligeramente anaranjado
         .preferredColorScheme(.dark) // Tema oscuro
     }
 }
