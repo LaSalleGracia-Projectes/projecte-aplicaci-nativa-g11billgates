@@ -16,7 +16,7 @@ struct MyTabView: View {
                     Text("Games")
                         .font(.system(size: 12))
                 }
-            
+                // TEST
             MainScreen()
                 .tabItem {
                     Image(systemName: "gamecontroller.circle")
@@ -38,12 +38,11 @@ struct MyTabView: View {
                         .font(.system(size: 12))
                 }
         }
-        .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2)) // Rojo más brillante y ligeramente anaranjado
-        .preferredColorScheme(.dark) // Tema oscuro
+        .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+        .preferredColorScheme(.dark) // Fuerza inicialmente el tema oscuro
     }
 }
 
-// Vistas temporales básicas para cada tab
 struct GameSelector: View {
     var body: some View {
         Text("Game Selector")
