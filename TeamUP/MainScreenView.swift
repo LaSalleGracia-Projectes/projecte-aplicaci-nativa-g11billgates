@@ -16,66 +16,92 @@ struct MainScreenView: View {
             // Header mejorado
             HStack {
                 Spacer()
-                Image(systemName: "gamecontroller.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 28)
+                Text("Team")
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.white) +
+                Text("UP")
+                    .font(.system(size: 28, weight: .bold))
                     .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                    .padding(.horizontal)
                 Spacer()
                 
                 Button(action: {}) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 22))
                         .foregroundColor(.white)
+                        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
                 }
                 .padding(.trailing, 20)
             }
             .frame(height: 50)
-            .background(Color.black.opacity(0.3))
+            .background(
+                Color.black.opacity(0.3)
+                    .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
+            )
             
             // Contenido principal
             GeometryReader { geometry in
                 ZStack {
-                    // Fondo
-                    Color.black.opacity(0.1)
+                    // Fondo con gradiente sutil
+                    LinearGradient(
+                        gradient: Gradient(colors: [
+                            Color.black.opacity(0.1),
+                            Color(red: 0.9, green: 0.3, blue: 0.2).opacity(0.05)
+                        ]),
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
                     
                     // Tarjeta principal
                     VStack {
                         ZStack {
-                            // Tarjeta del usuario
+                            // Tarjeta del usuario con mejor sombra
                             VStack(spacing: 0) {
-                                // Imagen del usuario con gradiente
+                                // Imagen del usuario con gradiente mejorado
                                 ZStack(alignment: .bottom) {
                                     Image(systemName: "person.fill")
                                         .resizable()
                                         .scaledToFill()
                                         .frame(height: geometry.size.height * 0.6)
                                         .clipped()
-                                        .background(Color.gray.opacity(0.3))
+                                        .background(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [
+                                                    Color.gray.opacity(0.3),
+                                                    Color.gray.opacity(0.4)
+                                                ]),
+                                                startPoint: .top,
+                                                endPoint: .bottom
+                                            )
+                                        )
                                     
-                                    // Gradiente sobre la imagen
+                                    // Gradiente sobre la imagen mejorado
                                     LinearGradient(
-                                        gradient: Gradient(colors: [.clear, .black.opacity(0.8)]),
+                                        gradient: Gradient(colors: [
+                                            .clear,
+                                            .black.opacity(0.4),
+                                            .black.opacity(0.8)
+                                        ]),
                                         startPoint: .top,
                                         endPoint: .bottom
                                     )
-                                    .frame(height: 100)
+                                    .frame(height: 150)
                                 }
                                 
-                                // Información del usuario mejorada
+                                // Información del usuario con mejor diseño
                                 VStack(alignment: .leading, spacing: 12) {
                                     HStack {
                                         Text("Username, 25")
                                             .font(.title2)
                                             .bold()
                                             .foregroundColor(.white)
+                                            .shadow(color: .black.opacity(0.3), radius: 2)
                                         Spacer()
                                     }
                                     
                                     HStack(spacing: 8) {
                                         Image(systemName: "gamecontroller")
                                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                            .shadow(color: .black.opacity(0.3), radius: 2)
                                         Text("League of Legends")
                                             .font(.system(size: 16))
                                             .foregroundColor(.gray)
@@ -84,10 +110,13 @@ struct MainScreenView: View {
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 15)
-                                .background(Color.black.opacity(0.6))
+                                .background(
+                                    Color.black.opacity(0.6)
+                                        .blur(radius: 0.5)
+                                )
                             }
                             .cornerRadius(20)
-                            .shadow(radius: 8)
+                            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                             .offset(cardOffset)
                             .rotationEffect(.degrees(Double(cardOffset.width / 20)))
                             .gesture(
@@ -123,7 +152,7 @@ struct MainScreenView: View {
                             }
                         }
                         
-                        // Botones de acción reposicionados
+                        // Botones de acción reposicionados más cerca
                         HStack(spacing: 50) {
                             // Botón Dislike mejorado
                             ActionButton(
@@ -139,10 +168,11 @@ struct MainScreenView: View {
                                 action: { swipeCard(direction: .right) }
                             )
                         }
-                        .padding(.top, 30)
-                        .padding(.bottom, 60) // Espacio para la TabBar
+                        .padding(.top, 15)
+                        .padding(.bottom, 30)
                     }
                     .padding(.horizontal)
+                    .padding(.top, 20)
                 }
             }
         }
@@ -193,9 +223,16 @@ struct ActionButton: View {
                 .font(.system(size: 25, weight: .bold))
                 .foregroundColor(.white)
                 .padding(20)
-                .background(color)
+                .background(
+                    color.opacity(0.9)
+                        .shadow(color: .black.opacity(0.2), radius: 5)
+                )
                 .clipShape(Circle())
-                .shadow(radius: 5)
+                .overlay(
+                    Circle()
+                        .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                )
+                .shadow(color: color.opacity(0.3), radius: 8, x: 0, y: 4)
         }
     }
 }
