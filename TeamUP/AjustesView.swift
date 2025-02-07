@@ -99,7 +99,7 @@ struct AjustesView: View {
                 leading: Button(action: {
                     presentationMode.wrappedValue.dismiss()
                 }) {
-                    Image(systemName: "xmark")
+                    Image(systemName: "arrowshape.turn.up.backward")
                         .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                         .font(.system(size: 20, weight: .bold))
                 }
