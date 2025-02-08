@@ -10,6 +10,7 @@ import SwiftUI
 struct AjustesView: View {
     @Environment(\.presentationMode) var presentationMode
     @AppStorage("isDarkMode") private var isDarkMode = true
+    @AppStorage("filterBySkill") private var filterBySkill = true
     
     @State private var selectedGender: Gender = .all
     @State private var minAge: Double = 18
@@ -24,6 +25,14 @@ struct AjustesView: View {
     var body: some View {
         NavigationView {
             Form {
+                // Sección de Filtros
+                Section(header: Text("Filtros").foregroundColor(.gray)) {
+                    Toggle("Filtrar por nivel de habilidad", isOn: $filterBySkill)
+                }
+                .onChange(of: filterBySkill) { newValue in
+                    // Aquí puedes añadir lógica adicional cuando cambie el filtro
+                }
+                
                 // Sección de Filtros de Género
                 Section(header: Text("Género").foregroundColor(.gray)) {
                     Picker("Mostrar", selection: $selectedGender) {
@@ -34,7 +43,7 @@ struct AjustesView: View {
                     .pickerStyle(SegmentedPickerStyle())
                 }
                 
-                // Sección de Filtros de Edad mejorada
+                // Sección de Filtros de Edad
                 Section(header: Text("Rango de Edad").foregroundColor(.gray)) {
                     VStack(spacing: 20) {
                         VStack(alignment: .leading) {
