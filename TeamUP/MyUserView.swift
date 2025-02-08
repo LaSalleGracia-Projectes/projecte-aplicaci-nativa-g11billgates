@@ -13,12 +13,33 @@ struct MyUserView: View {
     @State private var selectedGames: Set<String> = []
     @State private var selectedGender: Gender = .male
     @State private var showingSettings = false
+    @State private var selectedRanks: [Game: String] = [:]
     
     let games = ["Counter Strike", "League of Legends", "World of Warcraft", "Valorant"]
     
     enum Gender: String, CaseIterable {
         case male = "Hombre"
         case female = "Mujer"
+    }
+    
+    enum Game: String, CaseIterable {
+        case valorant = "Valorant"
+        case cs = "Counter Strike 2"
+        case lol = "League of Legends"
+        case wow = "World of Warcraft"
+        
+        var ranks: [String] {
+            switch self {
+            case .valorant:
+                return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Ascendente", "Inmortal", "Radiante"]
+            case .cs:
+                return ["Sin Rango", "Silver 1-4", "Gold Nova 1-4", "Master Guardian 1-2", "Master Guardian Elite", "Distinguished Master Guardian", "Legendary Eagle", "Legendary Eagle Master", "Supreme Master First Class", "Global Elite"]
+            case .lol:
+                return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Esmeralda", "Diamante", "Maestro", "Gran Maestro", "Retador"]
+            case .wow:
+                return ["Sin Rango", "300-1200", "1200-2000", "2000-2400", "2400-3500+"]
+            }
+        }
     }
     
     var body: some View {
@@ -116,28 +137,44 @@ struct MyUserView: View {
                     .padding(.horizontal)
                     .padding(.vertical, 5)
                     
-                    // Juegos
+                    // Juegos y Rangos
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("Juegos favoritos")
+                        Text("Juegos y Rangos")
                             .foregroundColor(.gray)
                             .padding(.leading, 5)
                         
-                        ForEach(games, id: \.self) { game in
-                            GameToggleButton(
-                                title: game,
-                                isSelected: selectedGames.contains(game),
-                                action: {
-                                    if selectedGames.contains(game) {
-                                        selectedGames.remove(game)
-                                    } else {
-                                        selectedGames.insert(game)
+                        ForEach(Game.allCases, id: \.self) { game in
+                            VStack(alignment: .leading, spacing: 8) {
+                                GameToggleButton(
+                                    title: game.rawValue,
+                                    isSelected: selectedGames.contains(game.rawValue),
+                                    action: {
+                                        if selectedGames.contains(game.rawValue) {
+                                            selectedGames.remove(game.rawValue)
+                                            selectedRanks.removeValue(forKey: game)
+                                        } else {
+                                            selectedGames.insert(game.rawValue)
+                                            selectedRanks[game] = game.ranks[0]
+                                        }
                                     }
+                                )
+                                
+                                if selectedGames.contains(game.rawValue) {
+                                    Picker("Rango", selection: Binding(
+                                        get: { selectedRanks[game] ?? game.ranks[0] },
+                                        set: { selectedRanks[game] = $0 }
+                                    )) {
+                                        ForEach(game.ranks, id: \.self) { rank in
+                                            Text(rank).tag(rank)
+                                        }
+                                    }
+                                    .pickerStyle(MenuPickerStyle())
+                                    .padding(.horizontal)
                                 }
-                            )
+                            }
                         }
                     }
                     .padding(.horizontal)
-                    .padding(.vertical, 5)
                     
                     // Género
                     VStack(alignment: .leading) {
