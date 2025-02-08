@@ -10,6 +10,7 @@ import SwiftUI
 struct MainScreenView: View {
     @State private var cardOffset: CGSize = .zero
     @State private var lastCardOffset: CGSize = .zero
+    @State private var showingSettings = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -17,7 +18,9 @@ struct MainScreenView: View {
             HStack {
                 Spacer()
                 
-                Button(action: {}) {
+                Button(action: {
+                    showingSettings = true
+                }) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 22))
                         .foregroundColor(.white)
@@ -40,6 +43,9 @@ struct MainScreenView: View {
                 Color.black.opacity(0.3)
                     .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
             )
+            .sheet(isPresented: $showingSettings) {
+                AjustesView()
+            }
             
             // Contenido principal
             GeometryReader { geometry in

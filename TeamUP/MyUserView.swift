@@ -12,6 +12,7 @@ struct MyUserView: View {
     @State private var description: String = ""
     @State private var selectedGames: Set<String> = []
     @State private var selectedGender: Gender = .male
+    @State private var showingSettings = false
     
     let games = ["Counter Strike", "League of Legends", "World of Warcraft", "Valorant"]
     
@@ -26,13 +27,18 @@ struct MyUserView: View {
             HStack {
                 Spacer()
                 
-                Button(action: {}) {
+                Button(action: {
+                    showingSettings = true
+                }) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 22))
                         .foregroundColor(.white)
                         .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
                 }
                 .padding(.trailing, 20)
+                .sheet(isPresented: $showingSettings) {
+                    AjustesView()
+                }
             }
             .overlay(
                 HStack {
@@ -78,7 +84,7 @@ struct MyUserView: View {
                                 .background(Color(red: 0.9, green: 0.3, blue: 0.2))
                                 .clipShape(Circle())
                         }
-                        .offset(x: 35, y: 35)
+                        .offset(x: 35, y: 35)   
                     }
                     .padding(.top, 10)
                     
