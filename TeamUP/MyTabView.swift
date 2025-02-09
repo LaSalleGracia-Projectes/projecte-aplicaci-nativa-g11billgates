@@ -10,13 +10,6 @@ import SwiftUI
 struct MyTabView: View {
     var body: some View {
         TabView {
-            GameListView()
-                .tabItem {
-                    Image(systemName: "list.bullet.circle")
-                    Text("Games")
-                        .font(.system(size: 12))
-                }
-            
             MainScreenView()
                 .tabItem {
                     Image(systemName: "gamecontroller.circle")
