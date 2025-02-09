@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MyTabView: View {
+    @AppStorage("isDarkMode") private var isDarkMode = true
+    
     var body: some View {
         TabView {
             MainScreenView()
@@ -32,7 +34,7 @@ struct MyTabView: View {
                 }
         }
         .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-        .preferredColorScheme(.dark) // Fuerza inicialmente el tema oscuro
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
 }
 
