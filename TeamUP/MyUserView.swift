@@ -15,12 +15,12 @@ struct MyUserView: View {
     @State private var showingSettings = false
     @State private var selectedRanks: [Game: String] = [:]
     
-    let games = ["Counter Strike", "League of Legends", "World of Warcraft", "Valorant"]
+    let games = ["Counter Strike", "League of Legends", "World of Warcraft", "Valorant"] //Juegos a los que juega el usuaio, depende de cual marque se filtrará para otros users.
     
     enum Gender: String, CaseIterable {
         case male = "Hombre"
         case female = "Mujer"
-    }
+    } //Generos, se puede filtrar por ellos
     
     enum Game: String, CaseIterable {
         case valorant = "Valorant"
@@ -28,7 +28,7 @@ struct MyUserView: View {
         case lol = "League of Legends"
         case wow = "World of Warcraft"
         
-        var ranks: [String] {
+        var ranks: [String] { //Basicamente, si en usuario elige un juego, depende de cual tienen un rango u otro, est sirve para elegir los rangos, se puede filtrar por ellos
             switch self {
             case .valorant:
                 return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Ascendente", "Inmortal", "Radiante"]
@@ -44,7 +44,7 @@ struct MyUserView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header igual que MainScreenView
+            // Header con nombre de la APP y ajustes
             HStack {
                 Spacer()
                 
@@ -77,10 +77,10 @@ struct MyUserView: View {
                     .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
             )
             
-            // Contenido existente
+            // Zona de posicionamiento de la pagina
             ScrollView {
                 VStack(spacing: 20) {
-                    // Imagen de perfil
+                    // La imagen redondita de perfil de arriba
                     ZStack {
                         Circle()
                             .fill(Color.gray.opacity(0.2))
@@ -97,7 +97,7 @@ struct MyUserView: View {
                             .frame(width: 100, height: 100)
                         
                         Button(action: {
-                            // Acción para cambiar la foto
+                            // Si le damos click al icnono de la camara podremos cambiar la foto
                         }) {
                             Image(systemName: "camera.fill")
                                 .foregroundColor(.white)
@@ -109,7 +109,7 @@ struct MyUserView: View {
                     }
                     .padding(.top, 10)
                     
-                    // Nombre
+                    // Zona para introducir el nombre
                     VStack(alignment: .leading) {
                         Text("Nombre")
                             .foregroundColor(.gray)
@@ -121,7 +121,7 @@ struct MyUserView: View {
                     .padding(.horizontal)
                     .padding(.vertical, 5)
                     
-                    // Descripción
+                    // Casillita un poco más grande para una breve descripción de nuestro perfil
                     VStack(alignment: .leading) {
                         Text("Descripción")
                             .foregroundColor(.gray)
@@ -137,7 +137,7 @@ struct MyUserView: View {
                     .padding(.horizontal)
                     .padding(.vertical, 5)
                     
-                    // Juegos y Rangos
+                    // Zona para elegir los juegos y rangos
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Juegos y Rangos")
                             .foregroundColor(.gray)
@@ -176,7 +176,7 @@ struct MyUserView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Género
+                    // Selecciona el genero puesto al principio, hombre o mujer
                     VStack(alignment: .leading) {
                         Text("Género")
                             .foregroundColor(.gray)
