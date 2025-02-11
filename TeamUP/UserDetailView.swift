@@ -84,3 +84,19 @@ struct UserDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
+#Preview {
+    NavigationView {  // Añadido NavigationView para que funcione la navegación
+        UserDetailView(
+            username: "DragonSlayer",
+            age: 25,
+            gender: "Hombre",
+            description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
+            games: [
+                ("League of Legends", "Diamante"),
+                ("World of Warcraft", "2400+")
+            ],
+            profileImage: "DwarfTestIcon"
+        )
+    }
+}
