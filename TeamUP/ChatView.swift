@@ -9,7 +9,6 @@ struct Message: Identifiable {
 
 struct ChatView: View {
     let chat: ChatPreview
-    @Environment(\.presentationMode) var presentationMode
     @State private var messageText = ""
     @State private var messages: [Message] = [
         Message(content: "¿Jugamos una partida?", isFromCurrentUser: false, timestamp: "12:30"),
@@ -21,14 +20,6 @@ struct ChatView: View {
         VStack(spacing: 0) {
             // Header
             HStack(spacing: 12) {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        .font(.system(size: 20, weight: .bold))
-                }
-                
                 Image(chat.profileImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
