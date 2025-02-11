@@ -23,8 +23,8 @@ struct MainScreenView: View {
                 }) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+                        .foregroundColor(.black)
+                        .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
                 }
                 .padding(.trailing, 20)
             }
@@ -32,17 +32,14 @@ struct MainScreenView: View {
                 HStack {
                     Text("Team")
                         .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.white) +
+                        .foregroundColor(.black)
                     Text("UP")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                 }
             )
             .frame(height: 50)
-            .background(
-                Color.black.opacity(0.3)
-                    .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
-            )
+            .background(Color.white)
             .sheet(isPresented: $showingSettings) {
                 AjustesView()
             }
@@ -67,41 +64,53 @@ struct MainScreenView: View {
                             VStack(spacing: 0) {
                                 // Imagen del usuario
                                 ZStack {
-                                    Image(systemName: "person.fill")
+                                    Image("DwarfTestIcon")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(maxWidth: .infinity)
-                                        .frame(height: 400)
-                                        .background(Color.gray.opacity(0.3))
+                                        .frame(height: geometry.size.height * 0.6)
+                                        .clipped()
+                                        .background(
+                                            Color.gray.opacity(0.3)
+                                        )
+                                    
+                                    // Gradiente sobre la imagen mejorado
+                                    VStack {
+                                        Spacer()
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [
+                                                .clear,
+                                                Color.white.opacity(0.9)
+                                            ]),
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
+                                        .frame(height: 30)
+                                    }
                                 }
                                 
-                                // Información del usuario con mejor diseño
-                                VStack(alignment: .leading, spacing: 12) {
+                                // Información del usuario mejorada
+                                VStack(alignment: .leading, spacing: 8) {
                                     HStack {
                                         Text("Username, 25")
                                             .font(.title2)
                                             .bold()
-                                            .foregroundColor(.white)
-                                            .shadow(color: .black.opacity(0.3), radius: 2)
+                                            .foregroundColor(.primary)
                                         Spacer()
                                     }
-                                    
+                                        
                                     HStack(spacing: 8) {
                                         Image(systemName: "gamecontroller")
                                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                            .shadow(color: .black.opacity(0.3), radius: 2)
                                         Text("League of Legends")
                                             .font(.system(size: 16))
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.secondary)
                                         Spacer()
                                     }
                                 }
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 15)
-                                .background(
-                                    Color.black.opacity(0.6)
-                                        .blur(radius: 0.5)
-                                )
+                                .padding(.vertical, 8)
+                                .background(Color.white.opacity(0.9))
                             }
                             .cornerRadius(20)
                             .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
