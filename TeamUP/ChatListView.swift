@@ -38,50 +38,53 @@ struct ChatListView: View {
     ]
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Header consistente
-            HStack {
-                Spacer()
+        NavigationView {
+            VStack(spacing: 0) {
+                // Header consistente
+                HStack {
+                    Spacer()
+                    
+                    Button(action: {
+                        showingSettings = true
+                    }) {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 22))
+                            .foregroundColor(.primary)
+                            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+                    }
+                    .padding(.trailing, 20)
+                }
+                .overlay(
+                    HStack(spacing: 0) {
+                        Text("Team")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(.primary) +
+                        Text("UP")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                    }
+                )
+                .frame(height: 50)
+                .background(Color(.systemBackground))
+                .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
+                .sheet(isPresented: $showingSettings) {
+                    AjustesView()
+                }
                 
-                Button(action: {
-                    showingSettings = true
-                }) {
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 22))
-                        .foregroundColor(.primary)
-                        .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
-                }
-                .padding(.trailing, 20)
-            }
-            .overlay(
-                HStack(spacing: 0) {
-                    Text("Team")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.primary) +
-                    Text("UP")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                }
-            )
-            .frame(height: 50)
-            .background(Color(.systemBackground))
-            .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
-            .sheet(isPresented: $showingSettings) {
-                AjustesView()
-            }
-            
-            // Lista de chats
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(chats) { chat in
-                        ChatRow(chat: chat)
-                        
-                        Divider()
-                            .padding(.leading, 76)
+                // Lista de chats
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(chats) { chat in
+                            ChatRow(chat: chat)
+                            
+                            Divider()
+                                .padding(.leading, 76)
+                        }
                     }
                 }
+                .background(Color(.systemBackground))
             }
-            .background(Color(.systemBackground))
+            .navigationBarHidden(true)
         }
     }
 }
