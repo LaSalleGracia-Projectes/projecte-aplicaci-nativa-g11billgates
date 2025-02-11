@@ -90,9 +90,7 @@ struct ChatRow: View {
     let chat: ChatPreview
     
     var body: some View {
-        Button(action: {
-            // Acción para abrir el chat
-        }) {
+        NavigationLink(destination: ChatView(chat: chat)) {
             HStack(spacing: 12) {
                 // Imagen de perfil
                 Image(chat.profileImage)
