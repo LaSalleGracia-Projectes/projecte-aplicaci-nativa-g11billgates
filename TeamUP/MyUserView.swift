@@ -44,7 +44,7 @@ struct MyUserView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header con nombre de la APP y ajustes
+            // Header
             HStack {
                 Spacer()
                 
@@ -57,12 +57,9 @@ struct MyUserView: View {
                         .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
                 }
                 .padding(.trailing, 20)
-                .sheet(isPresented: $showingSettings) {
-                    AjustesView()
-                }
             }
             .overlay(
-                HStack {
+                HStack(spacing: 0) {
                     Text("Team")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(.primary) +
@@ -74,11 +71,14 @@ struct MyUserView: View {
             .frame(height: 50)
             .background(Color(.systemBackground))
             .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
+            .sheet(isPresented: $showingSettings) {
+                AjustesView()
+            }
             
-            // Zona de posicionamiento de la pagina
+            // Contenido del perfil
             ScrollView {
                 VStack(spacing: 20) {
-                    // La imagen redondita de perfil de arriba
+                    // La imagen redondita de perfil
                     ZStack {
                         Circle()
                             .fill(Color.gray.opacity(0.2))
@@ -95,7 +95,7 @@ struct MyUserView: View {
                             .frame(width: 100, height: 100)
                         
                         Button(action: {
-                            // Si le damos click al icnono de la camara podremos cambiar la foto
+                            // Acción para cambiar la foto
                         }) {
                             Image(systemName: "camera.fill")
                                 .foregroundColor(.white)
@@ -103,11 +103,11 @@ struct MyUserView: View {
                                 .background(Color(red: 0.9, green: 0.3, blue: 0.2))
                                 .clipShape(Circle())
                         }
-                        .offset(x: 35, y: 35)   
+                        .offset(x: 35, y: 35)
                     }
                     .padding(.top, 10)
                     
-                    // Zona para introducir el nombre
+                    // Campos de entrada
                     VStack(alignment: .leading) {
                         Text("Nombre")
                             .foregroundColor(.gray)
@@ -117,9 +117,7 @@ struct MyUserView: View {
                             .padding(.horizontal, 5)
                     }
                     .padding(.horizontal)
-                    .padding(.vertical, 5)
                     
-                    // Casillita un poco más grande para una breve descripción de nuestro perfil
                     VStack(alignment: .leading) {
                         Text("Descripción")
                             .foregroundColor(.gray)
@@ -133,9 +131,8 @@ struct MyUserView: View {
                             .padding(.horizontal, 5)
                     }
                     .padding(.horizontal)
-                    .padding(.vertical, 5)
                     
-                    // Zona para elegir los juegos y rangos
+                    // Juegos y Rangos
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Juegos y Rangos")
                             .foregroundColor(.gray)
@@ -174,7 +171,7 @@ struct MyUserView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Selecciona el genero puesto al principio, hombre o mujer
+                    // Género
                     VStack(alignment: .leading) {
                         Text("Género")
                             .foregroundColor(.gray)
@@ -190,56 +187,10 @@ struct MyUserView: View {
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 5)
-                    
-                    // Información del usuario
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Text("Username, 25")
-                                .font(.title2)
-                                .bold()
-                                .foregroundColor(.primary)
-                            Spacer()
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "gamecontroller")
-                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                Text("League of Legends")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.primary.opacity(0.7))
-                                Text("•")
-                                    .foregroundColor(.primary.opacity(0.7))
-                                Text("Diamante")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                Spacer()
-                            }
-                            
-                            HStack(spacing: 8) {
-                                Image(systemName: "gamecontroller")
-                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                Text("World of Warcraft")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.primary.opacity(0.7))
-                                Text("•")
-                                    .foregroundColor(.primary.opacity(0.7))
-                                Text("2400+")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                Spacer()
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 6)
-                    .background(Color(.systemBackground).opacity(0.9))
-                    
-                    Spacer()
                 }
             }
+            .background(Color.black.opacity(0.1))
         }
-        .background(Color.black.opacity(0.1))
     }
 }
 
