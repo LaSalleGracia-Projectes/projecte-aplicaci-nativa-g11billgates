@@ -53,8 +53,8 @@ struct MyUserView: View {
                 }) {
                     Image(systemName: "gearshape.fill")
                         .font(.system(size: 22))
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 2)
+                        .foregroundColor(.primary)
+                        .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
                 }
                 .padding(.trailing, 20)
                 .sheet(isPresented: $showingSettings) {
@@ -65,17 +65,15 @@ struct MyUserView: View {
                 HStack {
                     Text("Team")
                         .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.white) +
+                        .foregroundColor(.primary) +
                     Text("UP")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                 }
             )
             .frame(height: 50)
-            .background(
-                Color.black.opacity(0.3)
-                    .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
-            )
+            .background(Color(.systemBackground))
+            .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
             
             // Zona de posicionamiento de la pagina
             ScrollView {
@@ -192,6 +190,50 @@ struct MyUserView: View {
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 5)
+                    
+                    // Información del usuario
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Text("Username, 25")
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.primary)
+                            Spacer()
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "gamecontroller")
+                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                Text("League of Legends")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.primary.opacity(0.7))
+                                Text("•")
+                                    .foregroundColor(.primary.opacity(0.7))
+                                Text("Diamante")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                Spacer()
+                            }
+                            
+                            HStack(spacing: 8) {
+                                Image(systemName: "gamecontroller")
+                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                Text("World of Warcraft")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.primary.opacity(0.7))
+                                Text("•")
+                                    .foregroundColor(.primary.opacity(0.7))
+                                Text("2400+")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                Spacer()
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 6)
+                    .background(Color(.systemBackground).opacity(0.9))
                     
                     Spacer()
                 }
