@@ -29,10 +29,10 @@ struct MainScreenView: View {
                 .padding(.trailing, 20)
             }
             .overlay(
-                HStack {
+                HStack(spacing: 0) {
                     Text("Team")
                         .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.primary)
+                        .foregroundColor(.primary) +
                     Text("UP")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
