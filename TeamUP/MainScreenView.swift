@@ -117,6 +117,7 @@ struct MainScreenView: View {
                                 .padding(.vertical, 6)
                                 .background(Color(.systemBackground).opacity(0.9))
                             }
+                            .background(Color(.systemGray4))
                             .cornerRadius(20)
                             .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
                             .offset(cardOffset)
