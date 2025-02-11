@@ -65,35 +65,14 @@ struct MainScreenView: View {
                         ZStack {
                             // Tarjeta del usuario con mejor sombra
                             VStack(spacing: 0) {
-                                // Imagen del usuario con gradiente mejorado
-                                ZStack(alignment: .bottom) {
+                                // Imagen del usuario
+                                ZStack {
                                     Image(systemName: "person.fill")
                                         .resizable()
-                                        .scaledToFill()
-                                        .frame(height: geometry.size.height * 0.6)
-                                        .clipped()
-                                        .background(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [
-                                                    Color.gray.opacity(0.3),
-                                                    Color.gray.opacity(0.4)
-                                                ]),
-                                                startPoint: .top,
-                                                endPoint: .bottom
-                                            )
-                                        )
-                                    
-                                    // Gradiente sobre la imagen mejorado
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [
-                                            .clear,
-                                            .black.opacity(0.4),
-                                            .black.opacity(0.8)
-                                        ]),
-                                        startPoint: .top,
-                                        endPoint: .bottom
-                                    )
-                                    .frame(height: 150)
+                                        .scaledToFit()
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 400)
+                                        .background(Color.gray.opacity(0.3))
                                 }
                                 
                                 // Información del usuario con mejor diseño
