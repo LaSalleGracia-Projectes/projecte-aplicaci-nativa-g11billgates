@@ -82,13 +82,34 @@ struct MainScreenView: View {
                                         Spacer()
                                     }
                                     
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "gamecontroller")
-                                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                        Text("League of Legends")
-                                            .font(.system(size: 16))
-                                            .foregroundColor(.secondary)
-                                        Spacer()
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        HStack(spacing: 8) {
+                                            Image(systemName: "gamecontroller")
+                                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                            Text("League of Legends")
+                                                .font(.system(size: 16))
+                                                .foregroundColor(.secondary)
+                                            Text("•")
+                                                .foregroundColor(.secondary)
+                                            Text("Diamante")
+                                                .font(.system(size: 16))
+                                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                            Spacer()
+                                        }
+                                        
+                                        HStack(spacing: 8) {
+                                            Image(systemName: "gamecontroller")
+                                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                            Text("World of Warcraft")
+                                                .font(.system(size: 16))
+                                                .foregroundColor(.secondary)
+                                            Text("•")
+                                                .foregroundColor(.secondary)
+                                            Text("2400+")
+                                                .font(.system(size: 16))
+                                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                            Spacer()
+                                        }
                                     }
                                 }
                                 .padding(.horizontal, 20)
@@ -124,10 +145,10 @@ struct MainScreenView: View {
                     
                             // Indicadores de like/dislike
                             if cardOffset.width > 60 {
-                                LikeDislikeIndicator(text: "LIKE", color: Color(red: 0.9, green: 0.3, blue: 0.2))
+                                LikeDislikeIndicator(text: "LETS PLAY!", color: Color(red: 0.9, green: 0.3, blue: 0.2))
                                     .offset(x: -50)
                             } else if cardOffset.width < -60 {
-                                LikeDislikeIndicator(text: "NOPE", color: .red)
+                                LikeDislikeIndicator(text: "NAH", color: .red)
                                     .offset(x: 50)
                             }
                         }
