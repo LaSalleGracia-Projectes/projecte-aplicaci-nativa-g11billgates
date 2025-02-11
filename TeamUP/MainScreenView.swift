@@ -66,31 +66,14 @@ struct MainScreenView: View {
                                 ZStack {
                                     Image("DwarfTestIcon")
                                         .resizable()
-                                        .scaledToFit()
+                                        .scaledToFill()
                                         .frame(maxWidth: .infinity)
                                         .frame(height: geometry.size.height * 0.6)
                                         .clipped()
-                                        .background(
-                                            Color.gray.opacity(0.3)
-                                        )
-                                    
-                                    // Gradiente sobre la imagen mejorado
-                                    VStack {
-                                        Spacer()
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [
-                                                .clear,
-                                                Color.white.opacity(0.9)
-                                            ]),
-                                            startPoint: .top,
-                                            endPoint: .bottom
-                                        )
-                                        .frame(height: 30)
-                                    }
                                 }
                                 
                                 // Información del usuario mejorada
-                                VStack(alignment: .leading, spacing: 8) {
+                                VStack(alignment: .leading, spacing: 6) {
                                     HStack {
                                         Text("Username, 25")
                                             .font(.title2)
@@ -98,7 +81,7 @@ struct MainScreenView: View {
                                             .foregroundColor(.primary)
                                         Spacer()
                                     }
-                                        
+                                    
                                     HStack(spacing: 8) {
                                         Image(systemName: "gamecontroller")
                                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
@@ -109,7 +92,7 @@ struct MainScreenView: View {
                                     }
                                 }
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 8)
+                                .padding(.vertical, 6)
                                 .background(Color.white.opacity(0.9))
                             }
                             .cornerRadius(20)
