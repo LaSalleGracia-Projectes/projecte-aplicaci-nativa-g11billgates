@@ -65,18 +65,18 @@ struct MainScreenView: View {
                                 // Tarjeta del usuario con mejor sombra
                                 VStack(spacing: 0) {
                                     // Imagen del usuario
-                                    NavigationLink(destination: UserDetailView(
-                                        username: "Username",
-                                        age: 25,
-                                        gender: "Hombre",
-                                        description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
-                                        games: [
-                                            ("League of Legends", "Diamante"),
-                                            ("World of Warcraft", "2400+")
-                                        ],
-                                        profileImage: "DwarfTestIcon"
-                                    )) {
-                                        ZStack {
+                                    ZStack {
+                                        NavigationLink(destination: UserDetailView(
+                                            username: "Username",
+                                            age: 25,
+                                            gender: "Hombre",
+                                            description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
+                                            games: [
+                                                ("League of Legends", "Diamante"),
+                                                ("World of Warcraft", "2400+")
+                                            ],
+                                            profileImage: "DwarfTestIcon"
+                                        )) {
                                             Image("DwarfTestIcon")
                                                 .resizable()
                                                 .scaledToFill()
@@ -84,6 +84,7 @@ struct MainScreenView: View {
                                                 .frame(height: geometry.size.height * 0.6)
                                                 .clipped()
                                         }
+                                        .buttonStyle(PlainButtonStyle())
                                     }
                                     
                                     // Información del usuario mejorada

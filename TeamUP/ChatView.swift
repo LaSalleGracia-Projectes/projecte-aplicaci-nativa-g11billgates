@@ -20,15 +20,29 @@ struct ChatView: View {
         VStack(spacing: 0) {
             // Header
             HStack(spacing: 12) {
-                Image(chat.profileImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-                
-                Text(chat.username)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(.primary)
+                NavigationLink(destination: UserDetailView(
+                    username: chat.username,
+                    age: 25, // Estos datos deberían venir del modelo de usuario
+                    gender: "Hombre",
+                    description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
+                    games: [
+                        ("League of Legends", "Diamante"),
+                        ("World of Warcraft", "2400+")
+                    ],
+                    profileImage: chat.profileImage
+                )) {
+                    HStack {
+                        Image(chat.profileImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                        
+                        Text(chat.username)
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(.primary)
+                    }
+                }
                 
                 Spacer()
             }

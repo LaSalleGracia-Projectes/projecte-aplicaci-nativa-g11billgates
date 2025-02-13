@@ -23,7 +23,7 @@ struct AjustesView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 // Sección de Filtros
                 Section(header: Text("Filtros").foregroundColor(.gray)) {
