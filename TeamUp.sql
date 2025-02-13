@@ -154,3 +154,62 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+/*Inserts */;
+
+--Insert en la tabla de usuario
+INSERT INTO usuario (Nombre, Correo, Contraseña, FotoPerfil, Edad, Region) VALUES 
+('Juan Pérez', 'juanperez@email.com', 'hashedpassword1', NULL, 25, 'Europa'),
+('María López', 'marialopez@email.com', 'hashedpassword2', NULL, 22, 'América'),
+('Carlos Gómez', 'carlosgomez@email.com', 'hashedpassword3', NULL, 30, 'Asia'),
+('Laura Fernández', 'laurafernandez@email.com', 'hashedpassword4', NULL, 27, 'África'),
+('Pedro Ramírez', 'pedroramirez@email.com', 'hashedpassword5', NULL, 29, 'Oceanía');
+
+--Insert en l tabla de juego
+INSERT INTO juego (NombreJuego, Genero, Descripcion) VALUES 
+('League of Legends', 'MOBA', 'Juego de estrategia en equipo.'),
+('Counter-Strike 2', 'FPS', 'Juego de disparos en primera persona.'),
+('FIFA 24', 'Deportes', 'Juego de simulación de fútbol.'),
+('Minecraft', 'Sandbox', 'Juego de construcción y supervivencia.'),
+('Valorant', 'FPS', 'Shooter táctico en primera persona.');
+
+--Insert en la tabla de juegousuario
+INSERT INTO juegousuario (IDUsuario, IDJuego, Estadisticas, Preferencias, NivelElo) VALUES 
+(1, 1, 'Kills: 500, Deaths: 200', 'Prefiere ADC', 1800),
+(2, 2, 'Victorias: 120, Derrotas: 80', 'Prefiere Sniper', 1900),
+(3, 3, 'Goles: 45, Asistencias: 30', 'Juega como delantero', 1750),
+(4, 4, 'Bloques colocados: 5000', 'Modo Creativo', NULL),
+(5, 5, 'K/D Ratio: 1.8', 'Prefiere Duelista', 1850);
+
+--Insert en la tabla de actividad
+INSERT INTO actividad (IDUsuario, TipoActividad, FechaRegistro) VALUES 
+(1, 'Inicio de sesión', '2025-02-13 10:00:00'),
+(2, 'Creó un nuevo match', '2025-02-13 10:15:00'),
+(3, 'Se unió a un chat', '2025-02-13 10:30:00'),
+(4, 'Actualizó su perfil', '2025-02-13 10:45:00'),
+(5, 'Salió de un chat', '2025-02-13 11:00:00');
+
+--Insert en la tabla de matchusers
+INSERT INTO matchusers (IDUsuario1, IDUsuario2, FechaCreacion) VALUES 
+(1, 2, '2025-02-13 11:10:00'),
+(3, 4, '2025-02-13 11:20:00'),
+(1, 5, '2025-02-13 11:30:00'),
+(2, 3, '2025-02-13 11:40:00'),
+(4, 5, '2025-02-13 11:50:00');
+
+--Insert en la tabla de chat
+INSERT INTO chat (IDMatch, FechaCreacion) VALUES 
+(1, '2025-02-13 12:00:00'),
+(2, '2025-02-13 12:10:00'),
+(3, '2025-02-13 12:20:00'),
+(4, '2025-02-13 12:30:00'),
+(5, '2025-02-13 12:40:00');
+
+--Insert en la tabla de mensaje
+INSERT INTO mensaje (IDChat, IDUsuario, Tipo, FechaEnvio) VALUES 
+(1, 1, 'Texto', '2025-02-13 12:05:00'),
+(1, 2, 'Texto', '2025-02-13 12:06:00'),
+(2, 3, 'Imagen', '2025-02-13 12:15:00'),
+(3, 1, 'Texto', '2025-02-13 12:25:00'),
+(4, 4, 'Emoji', '2025-02-13 12:35:00');
