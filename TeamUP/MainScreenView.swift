@@ -66,34 +66,33 @@ struct MainScreenView: View {
                                 VStack(spacing: 0) {
                                     // Imagen del usuario
                                     ZStack {
-                                        NavigationLink(destination: UserDetailView(
-                                            username: "Username",
-                                            age: 25,
-                                            gender: "Hombre",
-                                            description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
-                                            games: [
-                                                ("League of Legends", "Diamante"),
-                                                ("World of Warcraft", "2400+")
-                                            ],
-                                            profileImage: "DwarfTestIcon"
-                                        )) {
-                                            Image("DwarfTestIcon")
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(maxWidth: .infinity)
-                                                .frame(height: geometry.size.height * 0.6)
-                                                .clipped()
-                                        }
-                                        .buttonStyle(PlainButtonStyle())
+                                        Image("DwarfTestIcon")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(maxWidth: .infinity)
+                                            .frame(height: geometry.size.height * 0.6)
+                                            .clipped()
                                     }
                                     
                                     // Información del usuario mejorada
                                     VStack(alignment: .leading, spacing: 6) {
                                         HStack {
-                                            Text("Username, 25")
-                                                .font(.title2)
-                                                .bold()
-                                                .foregroundColor(.primary)
+                                            NavigationLink(destination: UserDetailView(
+                                                username: "Username",
+                                                age: 25,
+                                                gender: "Hombre",
+                                                description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
+                                                games: [
+                                                    ("League of Legends", "Diamante"),
+                                                    ("World of Warcraft", "2400+")
+                                                ],
+                                                profileImage: "DwarfTestIcon"
+                                            )) {
+                                                Text("Username, 25")
+                                                    .font(.title2)
+                                                    .bold()
+                                                    .foregroundColor(.primary)
+                                            }
                                             Spacer()
                                         }
                                         
