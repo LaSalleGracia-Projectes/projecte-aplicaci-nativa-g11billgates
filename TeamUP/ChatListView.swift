@@ -23,6 +23,8 @@ struct ChatListView: View {
         ChatPreview(username: "David", lastMessage: "GG WP", timestamp: "Ayer", profileImage: "profile4")
     ]
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -43,7 +45,7 @@ struct ChatListView: View {
                         NavigationLink(destination: AjustesView()) {
                             Image(systemName: "gearshape.fill")
                                 .font(.system(size: 22))
-                                .foregroundColor(.white)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                         }
                         .padding(.trailing)
                     }
