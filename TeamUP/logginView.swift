@@ -11,6 +11,7 @@ struct LogginView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var isLoggedIn = false
+    @State private var showingRegister = false
     
     var body: some View {
         NavigationView {
@@ -65,12 +66,32 @@ struct LogginView: View {
                 }
                 .padding(.horizontal, 30)
                 
+                // Botón de registro
+                Button(action: {
+                    showingRegister = true
+                }) {
+                    Text("Crear cuenta")
+                        .font(.headline)
+                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(Color(.systemBackground))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 25)
+                                .stroke(Color(red: 0.9, green: 0.3, blue: 0.2), lineWidth: 2)
+                        )
+                }
+                .padding(.horizontal, 30)
+                
                 Spacer()
             }
             .background(Color(.systemBackground))
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $isLoggedIn) {
                 MyTabView()
+            }
+            .sheet(isPresented: $showingRegister) {
+                RegisterView() // Placeholder para la vista de registro
             }
         }
     }
