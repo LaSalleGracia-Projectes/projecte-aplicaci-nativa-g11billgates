@@ -80,6 +80,7 @@ struct ChatView: View {
             .padding(.vertical, 12)
             .background(Color(.systemBackground))
         }
+        .navigationBarTitle("Chat", displayMode: .inline)
     }
     
     private func sendMessage() {
