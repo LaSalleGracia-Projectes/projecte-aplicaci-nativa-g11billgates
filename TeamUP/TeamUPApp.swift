@@ -11,7 +11,7 @@ import SwiftUI
 struct TeamUPApp: App {
     var body: some Scene {
         WindowGroup {
-            MyTabView()
+            LogginView()
         }
     }
 }
