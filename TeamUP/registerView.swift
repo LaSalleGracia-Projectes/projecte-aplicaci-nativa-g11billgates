@@ -18,7 +18,7 @@ struct RegisterView: View {
     @State private var isDarkMode = false
     @State private var description = ""
     @State private var age = 18
-    @State private var ageRange = 18...99
+    @State private var ageRange = 18.0...99.0
     @State private var genderPreference = "Ambos"
     
     var body: some View {
@@ -167,7 +167,7 @@ struct RegisterView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Filtrar por edad: \(Int(ageRange.lowerBound))-\(Int(ageRange.upperBound))")
                                     .foregroundColor(.gray)
-                                RangeSlider(range: $ageRange, in: 18...99)
+                                RangeSlider(range: $ageRange, in: 18.0...99.0)
                             }
                             
                             // Preferencia de género
