@@ -8,101 +8,51 @@
 import SwiftUI
 
 struct LogginView: View {
-    @State private var email = ""
+    @State private var username = ""
     @State private var password = ""
-    @State private var isLoggedIn = false
-    @State private var showingRegister = false
+    @EnvironmentObject var authManager: AuthenticationManager
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 30) {
+            VStack(spacing: 20) {
                 // Logo
-                VStack(spacing: 0) {
-                    Text("Team")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(.primary) +
-                    Text("UP")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                }
-                .padding(.top, 60)
-                .padding(.bottom, 40)
+                Image("teamup_logo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 200)
+                    .padding(.bottom, 50)
                 
                 // Campos de entrada
-                VStack(spacing: 20) {
-                    // Email
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Usuario")
-                            .foregroundColor(.gray)
-                        TextField("user", text: $email)
-                            .textFieldStyle(CustomTextFieldStyle())
-                            .autocapitalization(.none)
-                    }
-                    
-                    // Contraseña
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Contraseña")
-                            .foregroundColor(.gray)
-                        SecureField("1234", text: $password)
-                            .textFieldStyle(CustomTextFieldStyle())
-                    }
-                }
-                .padding(.horizontal, 30)
+                TextField("Usuario", text: $username)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
                 
-                // Botón de login
+                SecureField("Contraseña", text: $password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
+                
+                // Botón de inicio de sesión
                 Button(action: {
-                    // Lógica de login simple
-                    if email == "user" && password == "1234" {
-                        isLoggedIn = true
-                    }
+                    // Aquí iría la lógica de autenticación
+                    authManager.isLoggedIn = true
                 }) {
-                    Text("Iniciar Sesión")
-                        .font(.headline)
+                    Text("Iniciar sesión")
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 50)
+                        .padding()
                         .background(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        .cornerRadius(25)
+                        .cornerRadius(10)
                 }
-                .padding(.horizontal, 30)
+                .padding(.horizontal)
                 
-                // Botón de registro
-                Button(action: {
-                    showingRegister = true
-                }) {
-                    Text("Crear cuenta")
-                        .font(.headline)
+                // Enlace para registrarse
+                NavigationLink(destination: RegisterView()) {
+                    Text("¿No tienes cuenta? Regístrate")
                         .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50)
-                        .background(Color(.systemBackground))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 25)
-                                .stroke(Color(red: 0.9, green: 0.3, blue: 0.2), lineWidth: 2)
-                        )
                 }
-                .padding(.horizontal, 30)
-                
-                Spacer()
             }
-            .background(Color(.systemBackground))
-            .navigationBarHidden(true)
-            .fullScreenCover(isPresented: $isLoggedIn) {
-                MyTabView()
-            }
-            .sheet(isPresented: $showingRegister) {
-                RegisterView() // Placeholder para la vista de registro
-            }
-        }
-    }
-}
-
-struct CustomTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
             .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
+        }
     }
 }
 

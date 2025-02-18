@@ -19,10 +19,10 @@ struct ChatView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Header
-            HStack(spacing: 12) {
+            HStack(spacing: 8) {
                 NavigationLink(destination: UserDetailView(
                     username: chat.username,
-                    age: 25, // Estos datos deberían venir del modelo de usuario
+                    age: 25,
                     gender: "Hombre",
                     description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
                     games: [
@@ -31,23 +31,24 @@ struct ChatView: View {
                     ],
                     profileImage: chat.profileImage
                 )) {
-                    HStack {
+                    HStack(spacing: 6) {
                         Image(chat.profileImage)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 40, height: 40)
+                            .frame(width: 32, height: 32)
                             .clipShape(Circle())
                         
                         Text(chat.username)
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.primary)
                     }
                 }
                 
                 Spacer()
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding(.horizontal, 12)
+            .padding(.top, 0)
+            .padding(.bottom, 4)
             .background(Color(.systemBackground))
             .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
             
@@ -80,7 +81,7 @@ struct ChatView: View {
             .padding(.vertical, 12)
             .background(Color(.systemBackground))
         }
-        .navigationBarTitle("Chat", displayMode: .inline)
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func sendMessage() {
