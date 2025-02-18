@@ -15,53 +15,87 @@ struct LogginView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // Logo
-                Image("teamup_logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 200)
-                    .padding(.bottom, 50)
+            ZStack {
+                Color(red: 0.949, green: 0.949, blue: 0.949)
+                    .ignoresSafeArea()
                 
-                // Campos de entrada
-                TextField("Usuario", text: $username)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                    .autocapitalization(.none)
-                
-                SecureField("Contraseña", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.horizontal)
-                
-                // Botón de inicio de sesión
-                Button(action: {
-                    if !authManager.login(username: username, password: password) {
-                        showError = true
+                VStack(spacing: 20) {
+                    // Logo y título
+                    VStack(spacing: 10) {
+                        Image("teamup_logo")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 150)
+                        
+                        Text("¡Bienvenido de nuevo!")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.black)
+                        
+                        Text("Inicia sesión para continuar")
+                            .font(.system(size: 16))
+                            .foregroundColor(.gray)
                     }
-                }) {
-                    Text("Iniciar sesión")
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        .cornerRadius(10)
-                }
-                .padding(.horizontal)
-                .alert(isPresented: $showError) {
-                    Alert(
-                        title: Text("Error de inicio de sesión"),
-                        message: Text("Usuario o contraseña incorrectos"),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
-                
-                // Enlace para registrarse
-                NavigationLink(destination: RegisterView()) {
-                    Text("¿No tienes cuenta? Regístrate")
-                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                    .padding(.top, 50)
+                    .padding(.bottom, 40)
+                    
+                    // Campos de entrada
+                    VStack(spacing: 15) {
+                        TextField("", text: $username)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .placeholder(when: username.isEmpty) {
+                                Text("Usuario")
+                                    .foregroundColor(.gray)
+                            }
+                            .autocapitalization(.none)
+                        
+                        SecureField("", text: $password)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .placeholder(when: password.isEmpty) {
+                                Text("Contraseña")
+                                    .foregroundColor(.gray)
+                            }
+                    }
+                    .padding(.horizontal, 30)
+                    
+                    // Botón de inicio de sesión
+                    Button(action: {
+                        if !authManager.login(username: username, password: password) {
+                            showError = true
+                        }
+                    }) {
+                        Text("Iniciar sesión")
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color(red: 0.9, green: 0.3, blue: 0.2))
+                            .cornerRadius(10)
+                    }
+                    .padding(.horizontal, 30)
+                    .padding(.top, 20)
+                    .alert(isPresented: $showError) {
+                        Alert(
+                            title: Text("Error de inicio de sesión"),
+                            message: Text("Usuario o contraseña incorrectos"),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+                    
+                    // Enlace para registrarse
+                    NavigationLink(destination: RegisterView()) {
+                        HStack {
+                            Text("¿No tienes cuenta?")
+                                .foregroundColor(.gray)
+                            Text("Regístrate")
+                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .padding(.top, 20)
+                    
+                    Spacer()
                 }
             }
-            .padding()
+            .navigationBarHidden(true)
         }
     }
 }
