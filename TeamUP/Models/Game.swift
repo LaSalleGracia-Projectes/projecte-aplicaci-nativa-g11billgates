@@ -1,24 +1,24 @@
 import Foundation
 
 enum Game: String, CaseIterable {
-    case leagueOfLegends = "League of Legends"
-    case worldOfWarcraft = "World of Warcraft"
     case valorant = "Valorant"
-    case csgo = "CS:GO"
-    case dota2 = "Dota 2"
+    case cs = "Counter Strike 2"
+    case lol = "League of Legends"
+    case wow = "World of Warcraft"
+    case dota = "Dota 2"
     
     var ranks: [String] {
         switch self {
-        case .leagueOfLegends:
-            return ["Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Master", "GrandMaster", "Challenger"]
-        case .worldOfWarcraft:
-            return ["1400-1600", "1600-1800", "1800-2000", "2000-2200", "2200-2400", "2400+"]
         case .valorant:
-            return ["Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Inmortal", "Radiante"]
-        case .csgo:
-            return ["Plata 1-4", "Plata Élite", "Oro 1-4", "MG1-MGE", "DMG", "LE-LEM", "Supremo", "Global"]
-        case .dota2:
-            return ["Heraldo", "Guardián", "Cruzado", "Arconte", "Leyenda", "Ancestral", "Divino", "Inmortal"]
+            return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Ascendente", "Inmortal", "Radiante"]
+        case .cs:
+            return ["Sin Rango", "Silver 1-4", "Gold Nova 1-4", "Master Guardian 1-2", "Master Guardian Elite", "Distinguished Master Guardian", "Legendary Eagle", "Legendary Eagle Master", "Supreme Master First Class", "Global Elite"]
+        case .lol:
+            return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Esmeralda", "Diamante", "Maestro", "Gran Maestro", "Retador"]
+        case .wow:
+            return ["Sin Rango", "300-1200", "1200-2000", "2000-2400", "2400-3500+"]
+        case .dota:
+            return ["Sin Rango", "Heraldo", "Guardián", "Cruzado", "Arconte", "Leyenda", "Ancestral", "Divino", "Inmortal"]
         }
     }
 } 

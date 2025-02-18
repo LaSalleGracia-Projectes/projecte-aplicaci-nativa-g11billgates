@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import Foundation // Asegúrate de importar el módulo correcto si es necesario
+// Importa el archivo donde está definido el enum Game
 
 struct MyUserView: View {
     @State private var name: String = ""
     @State private var description: String = ""
-    @State private var selectedGames: Set<String> = []
+    @State private var selectedGames: [Game] = []
     @State private var selectedGender: Gender = .male
     @State private var showingSettings = false
     @State private var selectedRanks: [Game: String] = [:]
@@ -21,26 +23,6 @@ struct MyUserView: View {
         case male = "Hombre"
         case female = "Mujer"
     } //Generos, se puede filtrar por ellos
-    
-    enum Game: String, CaseIterable {
-        case valorant = "Valorant"
-        case cs = "Counter Strike 2"
-        case lol = "League of Legends"
-        case wow = "World of Warcraft"
-        
-        var ranks: [String] { //Basicamente, si en usuario elige un juego, depende de cual tienen un rango u otro, est sirve para elegir los rangos, se puede filtrar por ellos
-            switch self {
-            case .valorant:
-                return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Ascendente", "Inmortal", "Radiante"]
-            case .cs:
-                return ["Sin Rango", "Silver 1-4", "Gold Nova 1-4", "Master Guardian 1-2", "Master Guardian Elite", "Distinguished Master Guardian", "Legendary Eagle", "Legendary Eagle Master", "Supreme Master First Class", "Global Elite"]
-            case .lol:
-                return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Esmeralda", "Diamante", "Maestro", "Gran Maestro", "Retador"]
-            case .wow:
-                return ["Sin Rango", "300-1200", "1200-2000", "2000-2400", "2400-3500+"]
-            }
-        }
-    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -140,23 +122,29 @@ struct MyUserView: View {
                         
                         ForEach(Game.allCases, id: \.self) { game in
                             VStack(alignment: .leading, spacing: 8) {
-                                GameToggleButton(
-                                    title: game.rawValue,
-                                    isSelected: selectedGames.contains(game.rawValue),
-                                    action: {
-                                        if selectedGames.contains(game.rawValue) {
-                                            selectedGames.remove(game.rawValue)
-                                            selectedRanks.removeValue(forKey: game)
-                                        } else {
-                                            selectedGames.insert(game.rawValue)
-                                            selectedRanks[game] = game.ranks[0]
+                                Button(action: {
+                                    if selectedGames.contains(game) {
+                                        selectedGames.removeAll { $0 == game }
+                                        selectedRanks.removeValue(forKey: game)
+                                    } else {
+                                        selectedGames.append(game)
+                                        selectedRanks[game] = game.ranks.first ?? "Sin Rango"
+                                    }
+                                }) {
+                                    HStack {
+                                        Text(game.rawValue)
+                                        Spacer()
+                                        if selectedGames.contains(game) {
+                                            Image(systemName: "checkmark")
                                         }
                                     }
-                                )
+                                    .padding()
+                                    .background(RoundedRectangle(cornerRadius: 10).fill(selectedGames.contains(game) ? Color.blue : Color.gray.opacity(0.2)))
+                                }
                                 
-                                if selectedGames.contains(game.rawValue) {
+                                if selectedGames.contains(game) {
                                     Picker("Rango", selection: Binding(
-                                        get: { selectedRanks[game] ?? game.ranks[0] },
+                                        get: { selectedRanks[game] ?? game.ranks.first ?? "Sin Rango" },
                                         set: { selectedRanks[game] = $0 }
                                     )) {
                                         ForEach(game.ranks, id: \.self) { rank in
