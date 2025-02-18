@@ -133,13 +133,18 @@ struct MyUserView: View {
                                 }) {
                                     HStack {
                                         Text(game.rawValue)
+                                            .foregroundColor(selectedGames.contains(game) ? .white : .primary)
                                         Spacer()
                                         if selectedGames.contains(game) {
                                             Image(systemName: "checkmark")
+                                                .foregroundColor(.white)
                                         }
                                     }
                                     .padding()
-                                    .background(RoundedRectangle(cornerRadius: 10).fill(selectedGames.contains(game) ? Color.blue : Color.gray.opacity(0.2)))
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(selectedGames.contains(game) ? Color(red: 0.9, green: 0.3, blue: 0.2) : Color.gray.opacity(0.2))
+                                    )
                                 }
                                 
                                 if selectedGames.contains(game) {
