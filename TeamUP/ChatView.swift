@@ -47,8 +47,7 @@ struct ChatView: View {
                 Spacer()
             }
             .padding(.horizontal, 12)
-            .padding(.top, 0)
-            .padding(.bottom, 4)
+            .padding(.vertical, 4)
             .background(Color(.systemBackground))
             .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
             
