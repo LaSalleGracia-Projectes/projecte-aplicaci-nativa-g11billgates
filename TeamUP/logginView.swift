@@ -10,7 +10,6 @@ import SwiftUI
 struct LogginView: View {
     @State private var email = ""
     @State private var password = ""
-    @State private var showingRegister = false
     @State private var isLoggedIn = false
     
     var body: some View {
@@ -32,19 +31,18 @@ struct LogginView: View {
                 VStack(spacing: 20) {
                     // Email
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Email")
+                        Text("Usuario")
                             .foregroundColor(.gray)
-                        TextField("tu@email.com", text: $email)
+                        TextField("user", text: $email)
                             .textFieldStyle(CustomTextFieldStyle())
                             .autocapitalization(.none)
-                            .keyboardType(.emailAddress)
                     }
                     
                     // Contraseña
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Contraseña")
                             .foregroundColor(.gray)
-                        SecureField("••••••••", text: $password)
+                        SecureField("1234", text: $password)
                             .textFieldStyle(CustomTextFieldStyle())
                     }
                 }
@@ -52,8 +50,10 @@ struct LogginView: View {
                 
                 // Botón de login
                 Button(action: {
-                    // Aquí iría la lógica de login
-                    isLoggedIn = true
+                    // Lógica de login simple
+                    if email == "user" && password == "1234" {
+                        isLoggedIn = true
+                    }
                 }) {
                     Text("Iniciar Sesión")
                         .font(.headline)
@@ -65,46 +65,12 @@ struct LogginView: View {
                 }
                 .padding(.horizontal, 30)
                 
-                // Separador
-                HStack {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(height: 1)
-                    Text("O")
-                        .foregroundColor(.gray)
-                        .padding(.horizontal)
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(height: 1)
-                }
-                .padding(.horizontal, 30)
-                
-                // Botón de registro
-                Button(action: {
-                    showingRegister = true
-                }) {
-                    Text("Crear cuenta")
-                        .font(.headline)
-                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 50)
-                        .background(Color(.systemBackground))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 25)
-                                .stroke(Color(red: 0.9, green: 0.3, blue: 0.2), lineWidth: 2)
-                        )
-                }
-                .padding(.horizontal, 30)
-                
                 Spacer()
             }
             .background(Color(.systemBackground))
             .navigationBarHidden(true)
-            .sheet(isPresented: $showingRegister) {
-                RegisterView()
-            }
             .fullScreenCover(isPresented: $isLoggedIn) {
-                MainScreenView()
+                MyTabView()
             }
         }
     }
