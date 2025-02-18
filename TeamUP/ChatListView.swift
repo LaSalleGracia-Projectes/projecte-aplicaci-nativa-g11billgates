@@ -42,7 +42,7 @@ struct ChatListView: View {
                     
                     HStack {
                         Spacer()
-                        NavigationLink(destination: AjustesView()) {
+                        NavigationLink(destination: AjustesView().navigationBarBackButtonHidden(true)) {
                             Image(systemName: "gearshape.fill")
                                 .font(.system(size: 22))
                                 .foregroundColor(colorScheme == .dark ? .white : .black)
@@ -56,7 +56,7 @@ struct ChatListView: View {
                 
                 // Lista de chats
                 List(chats, id: \.username) { chat in
-                    NavigationLink(destination: ChatView(chat: chat)) {
+                    NavigationLink(destination: ChatView(chat: chat).navigationBarBackButtonHidden(true)) {
                         HStack {
                             Image(chat.profileImage)
                                 .resizable()
@@ -84,6 +84,7 @@ struct ChatListView: View {
                 }
                 .listStyle(PlainListStyle())
             }
+            .navigationBarHidden(true)
         }
     }
 }
