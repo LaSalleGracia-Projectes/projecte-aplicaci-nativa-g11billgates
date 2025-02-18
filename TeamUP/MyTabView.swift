@@ -14,16 +14,12 @@ struct MyTabView: View {
         TabView {
             MainScreenView()
                 .tabItem {
-                    Image(systemName: "gamecontroller.circle")
-                    Text("Match")
-                        .font(.system(size: 12))
+                    Label("Main", systemImage: "house")
                 }
             
             ChatListView()
                 .tabItem {
-                    Image(systemName: "bubble.circle")
-                    Text("Chats")
-                        .font(.system(size: 12))
+                    Label("Chats", systemImage: "message")
                 }
             
             MyUserView()
@@ -33,6 +29,7 @@ struct MyTabView: View {
                         .font(.system(size: 12))
                 }
         }
+        .navigationBarTitleDisplayMode(.inline)
         .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2))
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }
