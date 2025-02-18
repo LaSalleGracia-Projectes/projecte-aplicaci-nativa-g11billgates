@@ -10,6 +10,7 @@ import SwiftUI
 struct LogginView: View {
     @State private var username = ""
     @State private var password = ""
+    @State private var showError = false
     @EnvironmentObject var authManager: AuthenticationManager
     
     var body: some View {
@@ -26,6 +27,7 @@ struct LogginView: View {
                 TextField("Usuario", text: $username)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
+                    .autocapitalization(.none)
                 
                 SecureField("Contraseña", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -33,8 +35,9 @@ struct LogginView: View {
                 
                 // Botón de inicio de sesión
                 Button(action: {
-                    // Aquí iría la lógica de autenticación
-                    authManager.isLoggedIn = true
+                    if !authManager.login(username: username, password: password) {
+                        showError = true
+                    }
                 }) {
                     Text("Iniciar sesión")
                         .foregroundColor(.white)
@@ -44,6 +47,13 @@ struct LogginView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
+                .alert(isPresented: $showError) {
+                    Alert(
+                        title: Text("Error de inicio de sesión"),
+                        message: Text("Usuario o contraseña incorrectos"),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
                 
                 // Enlace para registrarse
                 NavigationLink(destination: RegisterView()) {
