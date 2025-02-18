@@ -56,7 +56,7 @@ struct ChatListView: View {
                 
                 // Lista de chats
                 List(chats, id: \.username) { chat in
-                    NavigationLink(destination: ChatView(chat: chat).navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: ChatView(chat: chat)) {
                         HStack {
                             Image(chat.profileImage)
                                 .resizable()
