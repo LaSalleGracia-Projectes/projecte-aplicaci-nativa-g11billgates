@@ -1,11 +1,6 @@
 import SwiftUI
+import Foundation
 
-struct Message: Identifiable {
-    let id = UUID()
-    let content: String
-    let isFromCurrentUser: Bool
-    let timestamp: String
-}
 
 struct ChatView: View {
     let chat: ChatPreview
@@ -20,8 +15,8 @@ struct ChatView: View {
         VStack(spacing: 0) {
             // Header
             HStack(spacing: 8) {
-                NavigationLink(destination: UserDetailView(
-                    username: chat.username,
+                NavigationLink(destination: UserDetailView(user: User(
+                    name: chat.username,
                     age: 25,
                     gender: "Hombre",
                     description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
@@ -30,7 +25,7 @@ struct ChatView: View {
                         ("World of Warcraft", "2400+")
                     ],
                     profileImage: chat.profileImage
-                )) {
+                ))) {
                     HStack(spacing: 6) {
                         Image(chat.profileImage)
                             .resizable()
@@ -101,8 +96,8 @@ struct MessageBubble: View {
             VStack(alignment: message.isFromCurrentUser ? .trailing : .leading) {
                 Text(message.content)
                     .padding(12)
-                    .background(message.isFromCurrentUser ? 
-                        Color(red: 0.9, green: 0.3, blue: 0.2) : 
+                    .background(message.isFromCurrentUser ?
+                        Color(red: 0.9, green: 0.3, blue: 0.2) :
                         Color(.systemGray6))
                     .foregroundColor(message.isFromCurrentUser ? .white : .primary)
                     .cornerRadius(16)
