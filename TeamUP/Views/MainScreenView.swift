@@ -23,24 +23,35 @@ struct MainScreenView: View {
             
             Spacer()
             
-            // Card Stack
+            // Card Stack or Message
             ZStack {
-                ForEach(viewModel.users.indices.reversed(), id: \.self) { index in
-                    if index == viewModel.currentIndex {
-                        CardView(user: viewModel.users[index]) {
+                if viewModel.currentIndex < viewModel.users.count {
+                    CardView(user: viewModel.users[viewModel.currentIndex]) {
+                        withAnimation(.spring()) {
                             viewModel.likeUser()
-                        } onDislike: {
+                        }
+                    } onDislike: {
+                        withAnimation(.spring()) {
                             viewModel.dislikeUser()
                         }
-                        .transition(.slide)
                     }
+                    .transition(AnyTransition.asymmetric(
+                        insertion: .opacity,
+                        removal: .opacity
+                    ))
+                    .id(viewModel.currentIndex) // Forzar la recreación de la vista
+                } else {
+                    Text("Ya no quedan usuarios que mostrar, inténtalo más tarde")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.gray)
+                        .padding()
+                        .multilineTextAlignment(.center)
                 }
             }
             
             Spacer()
         }
         .background(Color(.systemGray6))
-        .animation(.easeInOut, value: viewModel.currentIndex)
     }
 }
 

@@ -50,7 +50,7 @@ class MainScreenViewModel: ObservableObject {
         if currentIndex < users.count - 1 {
             currentIndex += 1
         } else {
-            currentIndex = 0 // Reiniciar o manejar el fin de la lista
+            currentIndex = users.count
         }
     }
-} 
+}
