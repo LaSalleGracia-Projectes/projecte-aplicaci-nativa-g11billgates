@@ -14,19 +14,17 @@ struct MyTabView: View {
         TabView {
             MainScreenView()
                 .tabItem {
-                    Label("Main", systemImage: "house")
+                    Label("Inicio", systemImage: "house")
                 }
             
-            ChatListView()
+            SettingsView()
                 .tabItem {
-                    Label("Chats", systemImage: "message")
+                    Label("Ajustes", systemImage: "gear")
                 }
             
-            MyUserView()
+            MyUserView(user: User(name: "Marc", age: 25, gender: "Hombre", description: "Descripción", games: [], profileImage: "profile"))
                 .tabItem {
-                    Image(systemName: "person.circle")
-                    Text("Profile")
-                        .font(.system(size: 12))
+                    Label("Perfil", systemImage: "person")
                 }
         }
         .navigationBarTitleDisplayMode(.inline)
