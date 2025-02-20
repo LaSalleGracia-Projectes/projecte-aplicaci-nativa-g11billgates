@@ -2,6 +2,8 @@ import SwiftUI
 
 struct MainScreenView: View {
     @StateObject private var viewModel = MainScreenViewModel()
+    @State private var showLikeOverlay = false
+    @State private var showDislikeOverlay = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,11 +30,19 @@ struct MainScreenView: View {
                 if viewModel.currentIndex < viewModel.users.count {
                     CardView(user: viewModel.users[viewModel.currentIndex]) {
                         withAnimation(.spring()) {
+                            showLikeOverlay = true
                             viewModel.likeUser()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                showLikeOverlay = false
+                            }
                         }
                     } onDislike: {
                         withAnimation(.spring()) {
+                            showDislikeOverlay = true
                             viewModel.dislikeUser()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                showDislikeOverlay = false
+                            }
                         }
                     }
                     .transition(AnyTransition.asymmetric(
@@ -40,6 +50,25 @@ struct MainScreenView: View {
                         removal: .opacity
                     ))
                     .id(viewModel.currentIndex)
+                    
+                    // Like Overlay
+                    if showLikeOverlay {
+                        Text("LIKE")
+                            .font(.system(size: 80, weight: .bold))
+                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                            .rotationEffect(.degrees(30))
+                            .transition(.scale)
+                    }
+                    
+                    // Dislike Overlay
+                    if showDislikeOverlay {
+                        Text("MEH")
+                            .font(.system(size: 80, weight: .bold))
+                            .foregroundColor(.red)
+                            .rotationEffect(.degrees(-30))
+                            .transition(.scale)
+                    }
+                    
                 } else {
                     Text("Ya no quedan usuarios que mostrar, inténtalo más tarde")
                         .font(.system(size: 20, weight: .bold))
@@ -55,7 +84,11 @@ struct MainScreenView: View {
                     // Botón Dislike
                     Button(action: {
                         withAnimation(.spring()) {
+                            showDislikeOverlay = true
                             viewModel.dislikeUser()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                showDislikeOverlay = false
+                            }
                         }
                     }) {
                         Image(systemName: "xmark")
@@ -70,7 +103,11 @@ struct MainScreenView: View {
                     // Botón Like
                     Button(action: {
                         withAnimation(.spring()) {
+                            showLikeOverlay = true
                             viewModel.likeUser()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                showLikeOverlay = false
+                            }
                         }
                     }) {
                         Image(systemName: "heart.fill")
