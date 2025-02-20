@@ -18,7 +18,6 @@ struct MainScreenView: View {
                         Spacer()
                     }
                 }
-                .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
                 .padding(.vertical, 8)
                 .background(Color(.systemBackground))
                 .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
@@ -36,14 +35,7 @@ struct MainScreenView: View {
                                         .clipShape(Circle())
                                     
                                     VStack(alignment: .leading, spacing: 4) {
-                                        NavigationLink(destination: UserDetailView(
-                                            username: user.name,
-                                            age: user.age,
-                                            gender: user.gender,
-                                            description: user.description,
-                                            games: user.games,
-                                            profileImage: user.profileImage
-                                        )) {
+                                        NavigationLink(destination: UserDetailView(user: user)) {
                                             Text(user.name)
                                                 .font(.system(size: 18, weight: .semibold))
                                                 .foregroundColor(.primary)
@@ -85,7 +77,7 @@ struct MainScreenView: View {
                 }
                 .background(Color(.systemGray6))
             }
-            .ignoresSafeArea(edges: .top)
+            .ignoresSafeArea()
             .navigationBarHidden(true)
         }
         .navigationViewStyle(StackNavigationViewStyle())

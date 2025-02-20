@@ -7,24 +7,18 @@ struct UserDetailView: View {
         VStack {
             Image(user.profileImage)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
                 .frame(width: 150, height: 150)
                 .clipShape(Circle())
-                .padding(.top, 20)
             
             Text(user.name)
                 .font(.system(size: 28, weight: .bold))
-                .padding(.top, 10)
             
             Text("\(user.age) años • \(user.gender)")
-                .font(.system(size: 16))
                 .foregroundColor(.gray)
-                .padding(.top, 5)
             
             Text(user.description)
-                .font(.system(size: 16))
-                .padding(.top, 10)
-                .padding(.horizontal, 20)
+                .padding()
             
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(user.games, id: \.0) { game in
@@ -39,10 +33,9 @@ struct UserDetailView: View {
                     }
                 }
             }
-            .padding(.top, 20)
             
             Spacer()
         }
-        .navigationBarTitle("Detalles del Usuario", displayMode: .inline)
+        .padding()
     }
 }
