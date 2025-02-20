@@ -2,8 +2,8 @@ import SwiftUI
 
 struct LogginView: View {
     @EnvironmentObject var authManager: AuthenticationManager
-    @State private var username = ""
-    @State private var password = ""
+    @State private var username: String = ""
+    @State private var password: String = ""
     @State private var showError = false
     
     var body: some View {
@@ -14,6 +14,7 @@ struct LogginView: View {
                     .padding()
                 
                 TextField("Usuario", text: $username)
+                    .autocapitalization(.none)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 

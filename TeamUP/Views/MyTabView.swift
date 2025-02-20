@@ -14,20 +14,29 @@ struct MyTabView: View {
         TabView {
             MainScreenView()
                 .tabItem {
-                    Label("Inicio", systemImage: "house")
+                    Label("Play", systemImage: "gamecontroller")
                 }
             
-            SettingsView()
+            ChatListView()
                 .tabItem {
-                    Label("Ajustes", systemImage: "gear")
+                    Label("Chat", systemImage: "bubble")
                 }
             
-            MyUserView(user: User(name: "Marc", age: 25, gender: "Hombre", description: "Descripción", games: [], profileImage: "profile"))
+            MyUserView(user: User(
+                name: "user",
+                age: 25,
+                gender: "Hombre",
+                description: "¡Hola! Me encanta jugar videojuegos competitivos.",
+                games: [
+                    ("League of Legends", "Diamante"),
+                    ("World of Warcraft", "2400+")
+                ],
+                profileImage: "DwarfTestIcon"
+            ))
                 .tabItem {
-                    Label("Perfil", systemImage: "person")
+                    Label("User", systemImage: "person")
                 }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .accentColor(Color(red: 0.9, green: 0.3, blue: 0.2))
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }
