@@ -26,7 +26,7 @@ class MainScreenViewModel: ObservableObject {
             profileImage: "ToadTestIcon"
         ),
         User(
-            name: "Carlos",
+            name: "Roger",
             age: 28,
             gender: "Hombre",
             description: "Jugador competitivo buscando team",
