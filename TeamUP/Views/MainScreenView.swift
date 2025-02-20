@@ -49,6 +49,43 @@ struct MainScreenView: View {
                 }
             }
             
+            // Botones de Like/Dislike
+            if viewModel.currentIndex < viewModel.users.count {
+                HStack(spacing: 60) {
+                    // Botón Dislike
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            viewModel.dislikeUser()
+                        }
+                    }) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 64, height: 64)
+                            .background(Color.red)
+                            .clipShape(Circle())
+                            .shadow(radius: 4)
+                    }
+                    
+                    // Botón Like
+                    Button(action: {
+                        withAnimation(.spring()) {
+                            viewModel.likeUser()
+                        }
+                    }) {
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 64, height: 64)
+                            .background(Color(red: 0.9, green: 0.3, blue: 0.2))
+                            .clipShape(Circle())
+                            .shadow(radius: 4)
+                    }
+                }
+                .padding(.top, 32)
+                .padding(.bottom, 24)
+            }
+            
             Spacer()
         }
         .background(Color(.systemGray6))
