@@ -21,65 +21,26 @@ struct MainScreenView: View {
             .background(Color(.systemBackground))
             .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
             
+            Spacer()
+            
             // Card Stack
             ZStack {
                 ForEach(viewModel.users.indices.reversed(), id: \.self) { index in
-                    if index >= viewModel.currentIndex {
+                    if index == viewModel.currentIndex {
                         CardView(user: viewModel.users[index]) {
-                            withAnimation {
-                                viewModel.likeUser()
-                            }
+                            viewModel.likeUser()
                         } onDislike: {
-                            withAnimation {
-                                viewModel.dislikeUser()
-                            }
+                            viewModel.dislikeUser()
                         }
+                        .transition(.slide)
                     }
                 }
             }
-            .padding(.vertical, 20)
             
-            // Action Buttons
-            HStack(spacing: 60) {
-                Button(action: {
-                    withAnimation {
-                        let lastCard = viewModel.users[viewModel.currentIndex]
-                        CardView(user: lastCard) { } onDislike: { }
-                            .offset(x: -500)
-                            .rotationEffect(.degrees(-20))
-                        viewModel.dislikeUser()
-                    }
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(20)
-                        .background(Color.red)
-                        .clipShape(Circle())
-                        .shadow(radius: 3)
-                }
-                
-                Button(action: {
-                    withAnimation {
-                        let lastCard = viewModel.users[viewModel.currentIndex]
-                        CardView(user: lastCard) { } onDislike: { }
-                            .offset(x: 500)
-                            .rotationEffect(.degrees(20))
-                        viewModel.likeUser()
-                    }
-                }) {
-                    Image(systemName: "checkmark")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                        .padding(20)
-                        .background(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        .clipShape(Circle())
-                        .shadow(radius: 3)
-                }
-            }
-            .padding(.bottom, 30)
+            Spacer()
         }
         .background(Color(.systemGray6))
+        .animation(.easeInOut, value: viewModel.currentIndex)
     }
 }
 
@@ -104,47 +65,42 @@ struct CardView: View {
                     .clipped()
                 
                 // Información del usuario
-                VStack(spacing: 15) {
+                VStack(alignment: .leading, spacing: 15) {
                     // Nombre y edad
                     HStack(spacing: 8) {
-                        Spacer()
                         Text(user.name)
                             .font(.system(size: 26, weight: .bold))
                         Text("\(user.age)")
                             .font(.system(size: 24))
                             .foregroundColor(.gray)
-                        Spacer()
                     }
                     .padding(.top, 15)
+                    .padding(.leading, 15)
                     
                     // Juegos y rangos
-                    VStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 12) {
                         ForEach(user.games, id: \.0) { game in
-                            HStack {
-                                Spacer()
-                                HStack(spacing: 8) {
-                                    Text(game.0)
-                                        .font(.system(size: 17, weight: .medium))
-                                    Text("•")
-                                        .foregroundColor(.gray)
-                                    Text(game.1)
-                                        .font(.system(size: 17))
-                                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(.systemGray6))
-                                )
-                                Spacer()
+                            HStack(spacing: 8) {
+                                Text(game.0)
+                                    .font(.system(size: 17, weight: .medium))
+                                Text("•")
+                                    .foregroundColor(.gray)
+                                Text(game.1)
+                                    .font(.system(size: 17))
+                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                             }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color(.systemGray6))
+                            )
                         }
                     }
+                    .padding(.leading, 15)
                     .padding(.bottom, 15)
                 }
                 .frame(width: cardWidth)
-                .padding(.horizontal, 25)
                 .background(Color(.systemBackground))
             }
             .frame(width: cardWidth)
@@ -161,7 +117,7 @@ struct CardView: View {
                         }
                     }
                     .onEnded { _ in
-                        withAnimation {
+                        withAnimation(.spring()) {
                             if offset.width > 120 {
                                 offset.width = 500
                                 onLike()
@@ -170,6 +126,7 @@ struct CardView: View {
                                 onDislike()
                             } else {
                                 offset = .zero
+                                color = .black
                             }
                         }
                     }

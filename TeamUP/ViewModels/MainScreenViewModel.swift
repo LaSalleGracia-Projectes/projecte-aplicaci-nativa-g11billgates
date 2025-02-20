@@ -39,18 +39,18 @@ class MainScreenViewModel: ObservableObject {
     ]
     
     func likeUser() {
-        if currentIndex < users.count - 1 {
-            withAnimation {
-                currentIndex += 1
-            }
-        }
+        moveToNextUser()
     }
     
     func dislikeUser() {
+        moveToNextUser()
+    }
+    
+    private func moveToNextUser() {
         if currentIndex < users.count - 1 {
-            withAnimation {
-                currentIndex += 1
-            }
+            currentIndex += 1
+        } else {
+            currentIndex = 0 // Reiniciar o manejar el fin de la lista
         }
     }
 } 
