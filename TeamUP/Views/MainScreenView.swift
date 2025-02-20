@@ -39,7 +39,7 @@ struct MainScreenView: View {
                         insertion: .opacity,
                         removal: .opacity
                     ))
-                    .id(viewModel.currentIndex) // Forzar la recreación de la vista
+                    .id(viewModel.currentIndex)
                 } else {
                     Text("Ya no quedan usuarios que mostrar, inténtalo más tarde")
                         .font(.system(size: 20, weight: .bold))
@@ -111,7 +111,7 @@ struct CardView: View {
                     .padding(.leading, 15)
                     .padding(.bottom, 15)
                 }
-                .frame(width: cardWidth)
+                .frame(width: cardWidth, alignment: .leading)
                 .background(Color(.systemBackground))
             }
             .frame(width: cardWidth)
