@@ -35,6 +35,28 @@ class MainScreenViewModel: ObservableObject {
                 ("CS2", "Águila")
             ],
             profileImage: "TerroristTestIcon"
+        ),
+        User(
+            name: "Saten",
+            age: 24,
+            gender: "Mujer",
+            description: "Hola me llamo Saten soy maja",
+            games: [
+                ("Valorant", "Inmortal"),
+                ("CS2", "Águila")
+            ],
+            profileImage: "CatTestIcon"
+        ),
+        User(
+            name: "Marc",
+            age: 20,
+            gender: "Hombre",
+            description: "Mejor player del wow españa",
+            games: [
+                ("WoW", "2900"),
+                ("CS2", "Águila")
+            ],
+            profileImage: "DogTestIcon"
         )
     ]
     
