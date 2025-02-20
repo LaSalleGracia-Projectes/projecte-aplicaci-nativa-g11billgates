@@ -23,7 +23,7 @@ class MainScreenViewModel: ObservableObject {
                 ("League of Legends", "Diamante"),
                 ("World of Warcraft", "2100+")
             ],
-            profileImage: "DwarfTestIcon"
+            profileImage: "ToadTestIcon"
         ),
         User(
             name: "Carlos",
@@ -34,7 +34,7 @@ class MainScreenViewModel: ObservableObject {
                 ("Valorant", "Inmortal"),
                 ("CS2", "Águila")
             ],
-            profileImage: "DwarfTestIcon"
+            profileImage: "TerroristTestIcon"
         )
     ]
     
