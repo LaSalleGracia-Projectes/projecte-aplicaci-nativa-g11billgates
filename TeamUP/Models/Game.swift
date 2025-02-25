@@ -1,24 +1,47 @@
 import Foundation
 
-enum Game: String, CaseIterable {
-    case valorant = "Valorant"
-    case cs = "Counter Strike 2"
-    case lol = "League of Legends"
-    case wow = "World of Warcraft"
-    case dota = "Dota 2"
+struct Game: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let ranks: [String]
+    var selectedRank: String?
     
-    var ranks: [String] {
-        switch self {
-        case .valorant:
-            return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Ascendente", "Inmortal", "Radiante"]
-        case .cs:
-            return ["Sin Rango", "Silver 1-4", "Gold Nova 1-4", "Master Guardian 1-2", "Master Guardian Elite", "Distinguished Master Guardian", "Legendary Eagle", "Legendary Eagle Master", "Supreme Master First Class", "Global Elite"]
-        case .lol:
-            return ["Sin Rango", "Hierro", "Bronce", "Plata", "Oro", "Platino", "Esmeralda", "Diamante", "Maestro", "Gran Maestro", "Retador"]
-        case .wow:
-            return ["Sin Rango", "300-1200", "1200-2000", "2000-2400", "2400-3500+"]
-        case .dota:
-            return ["Sin Rango", "Heraldo", "Guardián", "Cruzado", "Arconte", "Leyenda", "Ancestral", "Divino", "Inmortal"]
-        }
+    static let allGames: [Game] = [
+        Game(
+            name: "Counter Strike",
+            ranks: ["Silver", "Gold Nova", "Master Guardian", "DMG", "LE", "LEM", "Supreme", "Global Elite"]
+        ),
+        Game(
+            name: "League of Legends",
+            ranks: ["Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Master", "Grand Master", "Challenger"]
+        ),
+        Game(
+            name: "World of Warcraft",
+            ranks: ["1400+", "1600+", "1800+", "2000+", "2200+", "2400+", "2600+"]
+        ),
+        Game(
+            name: "Valorant",
+            ranks: ["Hierro", "Bronce", "Plata", "Oro", "Platino", "Diamante", "Ascendente", "Inmortal", "Radiante"]
+        ),
+        Game(
+            name: "Dota 2",
+            ranks: ["Heraldo", "Guardián", "Cruzado", "Arconte", "Leyenda", "Ancestral", "Divino", "Inmortal"]
+        )
+    ]
+    
+    // Inicializador
+    init(name: String, ranks: [String], selectedRank: String? = nil) {
+        self.name = name
+        self.ranks = ranks
+        self.selectedRank = selectedRank
+    }
+    
+    // Implementación de Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Game, rhs: Game) -> Bool {
+        lhs.id == rhs.id
     }
 } 

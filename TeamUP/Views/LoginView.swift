@@ -3,7 +3,8 @@ import SwiftUI
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     @State private var isPasswordVisible = false
-    @State private var navigateToTabView = false  // Nuevo estado para controlar la navegación
+    @State private var navigateToTabView = false
+    @State private var navigateToRegister = false  // Nuevo estado para la navegación al registro
     
     var body: some View {
         NavigationStack {
@@ -35,9 +36,13 @@ struct LoginView: View {
                             if isPasswordVisible {
                                 TextField("Contraseña", text: $viewModel.password)
                                     .textFieldStyle(CustomTextFieldStyle())
+                                    .textContentType(.none)
+                                    .autocapitalization(.none)
                             } else {
                                 SecureField("Contraseña", text: $viewModel.password)
                                     .textFieldStyle(CustomTextFieldStyle())
+                                    .textContentType(.none)
+                                    .autocapitalization(.none)
                             }
                             
                             Button(action: {
@@ -86,7 +91,7 @@ struct LoginView: View {
                             Text("¿No tienes cuenta?")
                                 .foregroundColor(.gray)
                             Button("Regístrate") {
-                                // Navegación al registro
+                                navigateToRegister = true
                             }
                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                             .fontWeight(.bold)
@@ -99,6 +104,9 @@ struct LoginView: View {
             .navigationDestination(isPresented: $navigateToTabView) {
                 MyTabView()
                     .navigationBarBackButtonHidden(true)
+            }
+            .navigationDestination(isPresented: $navigateToRegister) {
+                RegisterView()
             }
         }
     }
