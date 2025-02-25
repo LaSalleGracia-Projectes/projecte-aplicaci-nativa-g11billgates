@@ -7,7 +7,7 @@ struct ContentView: View {
         if authManager.isAuthenticated {
             MyTabView() // O la vista principal que quieras mostrar
         } else {
-            LogginView()
+            LoginView()
         }
     }
 } 
