@@ -27,13 +27,19 @@ struct LoginView: View {
                     .padding(.bottom, 40)
                     
                     // Campos de entrada
-                    VStack(spacing: 15) {
-                        // Usuario
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Usuario")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
                         TextField("Usuario", text: $viewModel.username)
                             .textFieldStyle(CustomTextFieldStyle())
                             .autocapitalization(.none)
                         
-                        // Contraseña
+                        Text("Contraseña")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
                         HStack {
                             if isPasswordVisible {
                                 TextField("Contraseña", text: $viewModel.password)

@@ -23,23 +23,55 @@ struct RegisterView: View {
                     .padding(.bottom, 40)
                     
                     // Campos de registro
-                    VStack(spacing: 15) {
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text("Correo electrónico")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
                         TextField("Correo electrónico", text: $viewModel.email)
-                            .textFieldStyle(CustomTextFieldStyle())
+                            .padding()
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(10)
+                            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
                             .autocapitalization(.none)
                             .keyboardType(.emailAddress)
                         
+                        Text("Usuario")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
                         TextField("Usuario", text: $viewModel.username)
-                            .textFieldStyle(CustomTextFieldStyle())
+                            .padding()
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(10)
+                            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
                             .autocapitalization(.none)
                         
+                        Text("Contraseña")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
                         SecureField("Contraseña", text: $viewModel.password)
-                            .textFieldStyle(CustomTextFieldStyle())
+                            .padding()
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(10)
+                            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
                             .textContentType(.none)
                             .autocapitalization(.none)
                         
+                        Text("Confirmar contraseña")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
                         SecureField("Confirmar contraseña", text: $viewModel.confirmPassword)
-                            .textFieldStyle(CustomTextFieldStyle())
+                            .padding()
+                            .background(Color.white)
+                            .foregroundColor(.black)
+                            .cornerRadius(10)
+                            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
                             .textContentType(.none)
                             .autocapitalization(.none)
                     }
