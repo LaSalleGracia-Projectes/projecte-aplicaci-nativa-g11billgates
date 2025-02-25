@@ -1,4 +1,5 @@
 import SwiftUI
+// Asegúrate de que CustomStyles.swift esté en el mismo módulo o target
 
 struct RegisterGamesView: View {
     @ObservedObject var viewModel: RegisterViewModel

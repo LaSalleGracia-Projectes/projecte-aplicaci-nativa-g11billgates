@@ -1,4 +1,6 @@
 import SwiftUI
+// Asegúrate de que CustomStyles.swift esté en el mismo módulo o target
+// No necesitas importación especial si está en el mismo módulo
 
 struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
@@ -112,16 +114,6 @@ struct LoginView: View {
     }
 }
 
-// Estilo personalizado para los campos de texto
-struct CustomTextFieldStyle: TextFieldStyle {
-    func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .padding()
-            .background(Color.white)
-            .cornerRadius(10)
-            .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
-    }
-}
 
 #Preview {
     LoginView()
