@@ -9,7 +9,7 @@ struct MainScreenView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Header
+                // Header - Ajustado para coincidir con otras vistas
                 ZStack {
                     HStack {
                         Spacer()
@@ -33,114 +33,114 @@ struct MainScreenView: View {
                         .padding(.trailing, 16)
                     }
                 }
+                .frame(height: 56)
                 .padding(.vertical, 8)
                 .background(Color(.systemBackground))
                 .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
                 
-                Spacer()
-                
-                // Card Stack or Message
-                ZStack {
+                // Contenido principal
+                ScrollView {
+                    // Card Stack or Message
+                    ZStack {
+                        if viewModel.currentIndex < viewModel.users.count {
+                            CardView(user: viewModel.users[viewModel.currentIndex]) {
+                                withAnimation(.spring()) {
+                                    showLikeOverlay = true
+                                    viewModel.likeUser()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        showLikeOverlay = false
+                                    }
+                                }
+                            } onDislike: {
+                                withAnimation(.spring()) {
+                                    showDislikeOverlay = true
+                                    viewModel.dislikeUser()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        showDislikeOverlay = false
+                                    }
+                                }
+                            }
+                            .transition(AnyTransition.asymmetric(
+                                insertion: .opacity,
+                                removal: .opacity
+                            ))
+                            .id(viewModel.currentIndex)
+                            
+                            // Like Overlay
+                            if showLikeOverlay {
+                                Text("LIKE")
+                                    .font(.system(size: 80, weight: .bold))
+                                    .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                    .rotationEffect(.degrees(30))
+                                    .transition(.scale)
+                            }
+                            
+                            // Dislike Overlay
+                            if showDislikeOverlay {
+                                Text("MEH")
+                                    .font(.system(size: 80, weight: .bold))
+                                    .foregroundColor(.red)
+                                    .rotationEffect(.degrees(-30))
+                                    .transition(.scale)
+                            }
+                            
+                        } else {
+                            Text("Ya no quedan usuarios que mostrar, inténtalo más tarde")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(.gray)
+                                .padding()
+                                .multilineTextAlignment(.center)
+                        }
+                    }
+                    
+                    // Botones de Like/Dislike
                     if viewModel.currentIndex < viewModel.users.count {
-                        CardView(user: viewModel.users[viewModel.currentIndex]) {
-                            withAnimation(.spring()) {
-                                showLikeOverlay = true
-                                viewModel.likeUser()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    showLikeOverlay = false
+                        HStack(spacing: 60) {
+                            // Botón Dislike
+                            Button(action: {
+                                withAnimation(.spring()) {
+                                    showDislikeOverlay = true
+                                    viewModel.dislikeUser()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        showDislikeOverlay = false
+                                    }
                                 }
+                            }) {
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .frame(width: 64, height: 64)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 4)
                             }
-                        } onDislike: {
-                            withAnimation(.spring()) {
-                                showDislikeOverlay = true
-                                viewModel.dislikeUser()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    showDislikeOverlay = false
+                            
+                            // Botón Like
+                            Button(action: {
+                                withAnimation(.spring()) {
+                                    showLikeOverlay = true
+                                    viewModel.likeUser()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        showLikeOverlay = false
+                                    }
                                 }
+                            }) {
+                                Image(systemName: "heart.fill")
+                                    .font(.system(size: 24, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .frame(width: 64, height: 64)
+                                    .background(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                    .clipShape(Circle())
+                                    .shadow(radius: 4)
                             }
                         }
-                        .transition(AnyTransition.asymmetric(
-                            insertion: .opacity,
-                            removal: .opacity
-                        ))
-                        .id(viewModel.currentIndex)
-                        
-                        // Like Overlay
-                        if showLikeOverlay {
-                            Text("LIKE")
-                                .font(.system(size: 80, weight: .bold))
-                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                .rotationEffect(.degrees(30))
-                                .transition(.scale)
-                        }
-                        
-                        // Dislike Overlay
-                        if showDislikeOverlay {
-                            Text("MEH")
-                                .font(.system(size: 80, weight: .bold))
-                                .foregroundColor(.red)
-                                .rotationEffect(.degrees(-30))
-                                .transition(.scale)
-                        }
-                        
-                    } else {
-                        Text("Ya no quedan usuarios que mostrar, inténtalo más tarde")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(.gray)
-                            .padding()
-                            .multilineTextAlignment(.center)
+                        .padding(.top, 32)
+                        .padding(.bottom, 24)
                     }
                 }
-                
-                // Botones de Like/Dislike
-                if viewModel.currentIndex < viewModel.users.count {
-                    HStack(spacing: 60) {
-                        // Botón Dislike
-                        Button(action: {
-                            withAnimation(.spring()) {
-                                showDislikeOverlay = true
-                                viewModel.dislikeUser()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    showDislikeOverlay = false
-                                }
-                            }
-                        }) {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.white)
-                                .frame(width: 64, height: 64)
-                                .background(Color.red)
-                                .clipShape(Circle())
-                                .shadow(radius: 4)
-                        }
-                        
-                        // Botón Like
-                        Button(action: {
-                            withAnimation(.spring()) {
-                                showLikeOverlay = true
-                                viewModel.likeUser()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    showLikeOverlay = false
-                                }
-                            }
-                        }) {
-                            Image(systemName: "heart.fill")
-                                .font(.system(size: 24, weight: .bold))
-                                .foregroundColor(.white)
-                                .frame(width: 64, height: 64)
-                                .background(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                .clipShape(Circle())
-                                .shadow(radius: 4)
-                        }
-                    }
-                    .padding(.top, 32)
-                    .padding(.bottom, 24)
-                }
-                
-                Spacer()
             }
             .background(Color(.systemGray6))
-            .navigationTitle("Inicio")
+            .navigationBarHidden(true)
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()
