@@ -28,71 +28,69 @@ struct ChatListView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                VStack(spacing: 0) {
-                    // Header
-                    ZStack {
-                        HStack {
-                            Spacer()
-                            Text("Team")
-                                .font(.system(size: 28, weight: .bold)) +
-                            Text("UP")
-                                .font(.system(size: 28, weight: .bold))
-                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                            Spacer()
-                        }
+            VStack(spacing: 0) {
+                // Header
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("Team")
+                            .font(.system(size: 28, weight: .bold)) +
+                        Text("UP")
+                            .font(.system(size: 28, weight: .bold))
+                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        Spacer()
                     }
-                    .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
-                    .padding(.vertical, 8)
-                    .background(Color(.systemBackground))
-                    .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
                     
-                    // Lista de chats
-                    List(chats, id: \.username) { chat in
-                        NavigationLink(destination: ChatView(chat: chat)) {
-                            HStack {
-                                Image(chat.profileImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showSettings = true
+                        }) {
+                            Image(systemName: "gear")
+                                .font(.system(size: 20))
+                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        }
+                        .padding(.trailing, 16)
+                    }
+                }
+                .padding(.vertical, 8)
+                .background(Color(.systemBackground))
+                .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
+                
+                // Lista de chats
+                List(chats, id: \.username) { chat in
+                    NavigationLink(destination: ChatView(chat: chat)) {
+                        HStack {
+                            Image(chat.profileImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 50, height: 50)
+                                .clipShape(Circle())
+                            
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(chat.username)
+                                    .font(.system(size: 16, weight: .semibold))
                                 
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(chat.username)
-                                        .font(.system(size: 16, weight: .semibold))
-                                    
-                                    Text(chat.lastMessage)
-                                        .font(.system(size: 14))
-                                        .foregroundColor(.gray)
-                                }
-                                
-                                Spacer()
-                                
-                                Text(chat.timestamp)
-                                    .font(.system(size: 12))
+                                Text(chat.lastMessage)
+                                    .font(.system(size: 14))
                                     .foregroundColor(.gray)
                             }
-                            .padding(.vertical, 8)
+                            
+                            Spacer()
+                            
+                            Text(chat.timestamp)
+                                .font(.system(size: 12))
+                                .foregroundColor(.gray)
                         }
-                    }
-                    .listStyle(PlainListStyle())
-                }
-            }
-            .ignoresSafeArea(edges: .top)
-            .navigationBarHidden(true)
-            .navigationTitle("Chats")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showSettings = true
-                    }) {
-                        Image(systemName: "gear")
-                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        .padding(.vertical, 8)
                     }
                 }
+                .listStyle(PlainListStyle())
             }
+            .background(Color(.systemGray6))
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarHidden(true)
+        .navigationTitle("Chats")
         .sheet(isPresented: $showSettings) {
             SettingsView()
         }

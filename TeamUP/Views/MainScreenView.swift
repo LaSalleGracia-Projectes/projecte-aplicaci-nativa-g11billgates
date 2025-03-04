@@ -20,6 +20,18 @@ struct MainScreenView: View {
                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                         Spacer()
                     }
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showSettings = true
+                        }) {
+                            Image(systemName: "gear")
+                                .font(.system(size: 20))
+                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        }
+                        .padding(.trailing, 16)
+                    }
                 }
                 .padding(.vertical, 8)
                 .background(Color(.systemBackground))
@@ -129,16 +141,6 @@ struct MainScreenView: View {
             }
             .background(Color(.systemGray6))
             .navigationTitle("Inicio")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showSettings = true
-                    }) {
-                        Image(systemName: "gear")
-                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                    }
-                }
-            }
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()
