@@ -5,7 +5,6 @@ class UserViewModel: ObservableObject {
     @Published var isEditingProfile = false
     @Published var tempBio: String = ""
     @Published var selectedGames: [Game] = []
-    @Published var gameRanks: [String: String] = [:]
     
     init(user: User) {
         self.user = user
@@ -13,9 +12,10 @@ class UserViewModel: ObservableObject {
         
         // Inicializar juegos y rangos desde el usuario
         for (gameName, rank) in user.games {
-            if let game = GamesList.allGames.first(where: { $0.name == gameName }) {
+            if let gameIndex = Game.allGames.firstIndex(where: { $0.name == gameName }) {
+                var game = Game.allGames[gameIndex]
+                game.selectedRank = rank
                 selectedGames.append(game)
-                gameRanks[gameName] = rank
             }
         }
     }
@@ -26,7 +26,7 @@ class UserViewModel: ObservableObject {
         // Actualizar juegos y rangos
         var updatedGames: [(String, String)] = []
         for game in selectedGames {
-            if let rank = gameRanks[game.name] {
+            if let rank = game.selectedRank {
                 updatedGames.append((game.name, rank))
             }
         }
@@ -37,14 +37,30 @@ class UserViewModel: ObservableObject {
     }
     
     func addGame(_ game: Game) {
-        if !selectedGames.contains(where: { $0.id == game.id }) {
-            selectedGames.append(game)
-            gameRanks[game.name] = game.ranks.first ?? "Sin rango"
+        if !selectedGames.contains(where: { $0.name == game.name }) {
+            var newGame = game
+            newGame.selectedRank = game.ranks.first
+            selectedGames.append(newGame)
         }
     }
     
-    func removeGame(_ game: Game) {
-        selectedGames.removeAll(where: { $0.id == game.id })
-        gameRanks.removeValue(forKey: game.name)
+    func updateGameRank(for gameName: String, rank: String) {
+        if let index = selectedGames.firstIndex(where: { $0.name == gameName }) {
+            selectedGames[index].selectedRank = rank
+        }
+    }
+    
+    func removeGame(at index: Int) {
+        if index >= 0 && index < selectedGames.count {
+            selectedGames.remove(at: index)
+        }
+    }
+    
+    func removeGame(named gameName: String) {
+        selectedGames.removeAll(where: { $0.name == gameName })
+    }
+    
+    func updateProfileImage(_ imageName: String) {
+        user.profileImage = imageName
     }
 } 
