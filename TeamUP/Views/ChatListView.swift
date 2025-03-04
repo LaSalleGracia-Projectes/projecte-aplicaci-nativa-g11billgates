@@ -24,9 +24,10 @@ struct ChatListView: View {
     ]
     
     @Environment(\.colorScheme) var colorScheme
+    @State private var showSettings = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack(spacing: 0) {
                     // Header
@@ -79,8 +80,22 @@ struct ChatListView: View {
             }
             .ignoresSafeArea(edges: .top)
             .navigationBarHidden(true)
+            .navigationTitle("Chats")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showSettings = true
+                    }) {
+                        Image(systemName: "gear")
+                            .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                    }
+                }
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+        }
     }
 }
 
