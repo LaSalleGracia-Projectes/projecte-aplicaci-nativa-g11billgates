@@ -4,6 +4,10 @@ struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     @Environment(\.dismiss) var dismiss
     @AppStorage("isDarkMode") private var isDarkMode = false
+    @State private var filterByRank = false
+    @State private var minAge = 18
+    @State private var maxAge = 50
+    @State private var genderPreference = AppSettings.GenderPreference.all
     
     var body: some View {
         NavigationStack {
@@ -17,26 +21,26 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("Filtros de juego")) {
-                    Toggle("Filtrar por rango", isOn: $viewModel.settings.filterByRank)
+                    Toggle("Filtrar por rango", isOn: $filterByRank)
                 }
                 
                 Section(header: Text("Filtros de edad")) {
                     HStack {
-                        Text("Edad mínima: \(viewModel.settings.minAge)")
+                        Text("Edad mínima: \(minAge)")
                         Spacer()
-                        Stepper("", value: $viewModel.settings.minAge, in: 18...viewModel.settings.maxAge)
+                        Stepper("", value: $minAge, in: 18...maxAge)
                     }
                     
                     HStack {
-                        Text("Edad máxima: \(viewModel.settings.maxAge)")
+                        Text("Edad máxima: \(maxAge)")
                         Spacer()
-                        Stepper("", value: $viewModel.settings.maxAge, in: viewModel.settings.minAge...100)
+                        Stepper("", value: $maxAge, in: minAge...100)
                     }
                 }
                 
                 Section(header: Text("Filtros de género")) {
-                    Picker("Mostrar", selection: $viewModel.settings.genderPreference) {
-                        ForEach(Settings.GenderPreference.allCases) { preference in
+                    Picker("Mostrar", selection: $genderPreference) {
+                        ForEach(AppSettings.GenderPreference.allCases) { preference in
                             Text(preference.rawValue).tag(preference)
                         }
                     }
@@ -54,13 +58,27 @@ struct SettingsView: View {
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Guardar") {
-                        viewModel.saveSettings()
+                        // Guardar configuraciones
+                        viewModel.saveSettings(
+                            filterByRank: filterByRank,
+                            minAge: minAge,
+                            maxAge: maxAge,
+                            genderPreference: genderPreference
+                        )
                         dismiss()
                     }
                     .fontWeight(.bold)
                 }
             }
             .preferredColorScheme(isDarkMode ? .dark : .light)
+            .onAppear {
+                // Cargar configuraciones actuales
+                let settings = viewModel.getSettings()
+                filterByRank = settings.filterByRank
+                minAge = settings.minAge
+                maxAge = settings.maxAge
+                genderPreference = settings.genderPreference
+            }
         }
     }
 } 
