@@ -60,7 +60,15 @@ class MainScreenViewModel: ObservableObject {
         )
     ]
     
+    @Published var showMatch = false
+    @Published var matchedUser: User?
+    
     func likeUser() {
+        // Comprobar si es Saten
+        if users[currentIndex].name == "Saten" {
+            matchedUser = users[currentIndex]
+            showMatch = true
+        }
         moveToNextUser()
     }
     
@@ -74,5 +82,12 @@ class MainScreenViewModel: ObservableObject {
         } else {
             currentIndex = users.count
         }
+    }
+    
+    // Esta función se usará cuando implementemos la base de datos
+    private func saveMatch(with user: User) {
+        // TODO: Implementar la lógica para guardar el match en la base de datos
+        // Por ejemplo:
+        // DatabaseManager.shared.saveMatch(currentUser: currentUser, matchedUser: user)
     }
 }

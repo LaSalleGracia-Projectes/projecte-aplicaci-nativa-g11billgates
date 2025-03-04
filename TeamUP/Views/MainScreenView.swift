@@ -145,6 +145,11 @@ struct MainScreenView: View {
         .sheet(isPresented: $showSettings) {
             SettingsView()
         }
+        .fullScreenCover(isPresented: $viewModel.showMatch) {
+            if let matchedUser = viewModel.matchedUser {
+                MatchView(matchedUser: matchedUser, isPresented: $viewModel.showMatch)
+            }
+        }
     }
 }
 
