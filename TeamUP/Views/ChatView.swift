@@ -1,10 +1,24 @@
 import SwiftUI
-import Foundation
 
+// MARK: - Models
+struct ChatMessage: Identifiable {
+    let id = UUID()
+    let content: String
+    let timestamp: String
+    let isFromCurrentUser: Bool
+}
+
+// MARK: - Views
 struct ChatView: View {
     let user: User
     @State private var messageText = ""
     @State private var selectedUser: User?
+    
+    // Mensajes de ejemplo
+    private let sampleMessages = [
+        ChatMessage(content: "¡Hola! ¿Jugamos una partida?", timestamp: "14:30", isFromCurrentUser: true),
+        ChatMessage(content: "¡Claro! Dame 5 minutos", timestamp: "14:31", isFromCurrentUser: false)
+    ]
     
     var body: some View {
         VStack(spacing: 0) {
@@ -30,27 +44,12 @@ struct ChatView: View {
             .background(Color(.systemBackground))
             .shadow(color: .black.opacity(0.1), radius: 5, y: 2)
             
-            // Área de mensajes (placeholder por ahora)
+            // Área de mensajes
             ScrollView {
                 VStack(spacing: 16) {
-                    ForEach(0..<10) { i in
-                        HStack {
-                            if i % 2 == 0 {
-                                Spacer()
-                                Text("¡Hola! ¿Jugamos una partida?")
-                                    .padding(12)
-                                    .background(Color(red: 0.9, green: 0.3, blue: 0.2))
-                                    .foregroundColor(.white)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                            } else {
-                                Text("¡Claro! Dame 5 minutos")
-                                    .padding(12)
-                                    .background(Color(.systemGray5))
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                                Spacer()
-                            }
-                        }
-                        .padding(.horizontal)
+                    ForEach(sampleMessages) { message in
+                        MessageBubble(message: message)
+                            .padding(.horizontal)
                     }
                 }
                 .padding(.vertical)
@@ -86,7 +85,7 @@ struct ChatView: View {
 }
 
 struct MessageBubble: View {
-    let message: Message
+    let message: ChatMessage
     
     var body: some View {
         HStack {

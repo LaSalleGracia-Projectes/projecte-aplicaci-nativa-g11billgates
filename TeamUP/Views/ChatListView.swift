@@ -7,14 +7,16 @@
 
 import SwiftUI
 
+// MARK: - Models
 struct ChatPreview: Identifiable {
     let id = UUID()
     let username: String
     let lastMessage: String
     let timestamp: String
-    let profileImage: String // Nombre de la imagen en Assets
+    let profileImage: String
 }
 
+// MARK: - View
 struct ChatListView: View {
     @StateObject private var viewModel = ChatListViewModel()
     
