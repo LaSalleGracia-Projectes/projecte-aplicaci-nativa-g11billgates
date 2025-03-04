@@ -161,7 +161,20 @@ struct CardView: View {
     @State private var offset = CGSize.zero
     @State private var color = Color.black
     
-    private let cardWidth = UIScreen.main.bounds.width - 40
+    // Ajustamos el tamaño de la tarjeta según el dispositivo
+    private var cardWidth: CGFloat {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let isIPad = UIDevice.current.userInterfaceIdiom == .pad
+        
+        if isIPad {
+            // En iPad, usamos un tamaño más pequeño y proporcional
+            return min(screenWidth - 80, screenHeight * 0.6)
+        } else {
+            // En iPhone mantenemos el tamaño original
+            return screenWidth - 40
+        }
+    }
     
     var body: some View {
         ZStack {
