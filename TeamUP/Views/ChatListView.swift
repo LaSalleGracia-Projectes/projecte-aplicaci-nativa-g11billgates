@@ -19,11 +19,12 @@ struct ChatPreview: Identifiable {
 // MARK: - View
 struct ChatListView: View {
     @StateObject private var viewModel = ChatListViewModel()
+    @State private var showSettings = false
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Header
+                // Header - Ajustado para coincidir con otras vistas
                 ZStack {
                     HStack {
                         Spacer()
@@ -34,7 +35,20 @@ struct ChatListView: View {
                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                         Spacer()
                     }
+                    
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showSettings = true
+                        }) {
+                            Image(systemName: "gear")
+                                .font(.system(size: 20))
+                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        }
+                        .padding(.trailing, 16)
+                    }
                 }
+                .frame(height: 56)
                 .padding(.vertical, 8)
                 .background(Color(.systemBackground))
                 .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
@@ -76,7 +90,10 @@ struct ChatListView: View {
                 .listStyle(PlainListStyle())
             }
             .background(Color(.systemGray6))
-            .navigationTitle("Chats")
+            .navigationBarHidden(true)
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
+            }
         }
     }
 }
