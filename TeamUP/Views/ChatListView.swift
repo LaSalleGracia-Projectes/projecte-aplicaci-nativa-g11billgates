@@ -16,15 +16,7 @@ struct ChatPreview: Identifiable {
 }
 
 struct ChatListView: View {
-    let chats: [ChatPreview] = [
-        ChatPreview(username: "Ana", lastMessage: "¿Jugamos una partida?", timestamp: "12:30", profileImage: "profile1"),
-        ChatPreview(username: "Carlos", lastMessage: "Buen juego!", timestamp: "11:45", profileImage: "profile2"),
-        ChatPreview(username: "Elena", lastMessage: "¿Mañana a las 5?", timestamp: "10:15", profileImage: "profile3"),
-        ChatPreview(username: "David", lastMessage: "GG WP", timestamp: "Ayer", profileImage: "profile4")
-    ]
-    
-    @Environment(\.colorScheme) var colorScheme
-    @State private var showSettings = false
+    @StateObject private var viewModel = ChatListViewModel()
     
     var body: some View {
         NavigationStack {
@@ -40,27 +32,20 @@ struct ChatListView: View {
                             .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
                         Spacer()
                     }
-                    
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            showSettings = true
-                        }) {
-                            Image(systemName: "gear")
-                                .font(.system(size: 20))
-                                .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
-                        }
-                        .padding(.trailing, 16)
-                    }
                 }
                 .padding(.vertical, 8)
                 .background(Color(.systemBackground))
                 .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
                 
                 // Lista de chats
-                List(chats, id: \.username) { chat in
-                    NavigationLink(destination: ChatView(chat: chat)) {
-                        HStack {
+                List(viewModel.chats) { chat in
+                    NavigationLink(destination: {
+                        if let user = viewModel.findUser(withName: chat.username) {
+                            ChatView(user: user)
+                        }
+                    }) {
+                        HStack(spacing: 12) {
+                            // Imagen de perfil
                             Image(chat.profileImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -69,11 +54,12 @@ struct ChatListView: View {
                             
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(chat.username)
-                                    .font(.system(size: 16, weight: .semibold))
+                                    .font(.system(size: 16, weight: .bold))
                                 
                                 Text(chat.lastMessage)
                                     .font(.system(size: 14))
                                     .foregroundColor(.gray)
+                                    .lineLimit(1)
                             }
                             
                             Spacer()
@@ -88,11 +74,7 @@ struct ChatListView: View {
                 .listStyle(PlainListStyle())
             }
             .background(Color(.systemGray6))
-        }
-        .navigationBarHidden(true)
-        .navigationTitle("Chats")
-        .sheet(isPresented: $showSettings) {
-            SettingsView()
+            .navigationTitle("Chats")
         }
     }
 }

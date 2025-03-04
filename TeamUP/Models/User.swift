@@ -1,6 +1,7 @@
 import Foundation
 
-struct User {
+struct User: Identifiable {
+    let id = UUID()
     var name: String
     var age: Int
     var gender: String

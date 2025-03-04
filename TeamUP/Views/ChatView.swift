@@ -1,62 +1,60 @@
 import SwiftUI
 import Foundation
 
-
 struct ChatView: View {
-    let chat: ChatPreview
+    let user: User
     @State private var messageText = ""
-    @State private var messages: [Message] = [
-        Message(content: "¿Jugamos una partida?", isFromCurrentUser: false, timestamp: "12:30"),
-        Message(content: "¡Claro! Dame 5 minutos", isFromCurrentUser: true, timestamp: "12:31"),
-        Message(content: "Perfect!", isFromCurrentUser: false, timestamp: "12:31")
-    ]
+    @State private var selectedUser: User?
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header
-            HStack(spacing: 8) {
-                NavigationLink(destination: UserDetailView(user: User(
-                    name: chat.username,
-                    age: 25,
-                    gender: "Hombre",
-                    description: "¡Hola! Me encanta jugar videojuegos competitivos y siempre busco mejorar. Principalmente juego League of Legends y World of Warcraft, pero estoy abierto a probar nuevos juegos.",
-                    games: [
-                        ("League of Legends", "Diamante"),
-                        ("World of Warcraft", "2400+")
-                    ],
-                    profileImage: chat.profileImage
-                ))) {
-                    HStack(spacing: 6) {
-                        Image(chat.profileImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 32, height: 32)
-                            .clipShape(Circle())
-                        
-                        Text(chat.username)
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.primary)
-                    }
+            // Header personalizado
+            HStack(spacing: 16) {
+                Image(user.profileImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                
+                Button(action: {
+                    selectedUser = user
+                }) {
+                    Text(user.name)
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.primary)
                 }
                 
                 Spacer()
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 4)
+            .padding()
             .background(Color(.systemBackground))
-            .shadow(color: .black.opacity(0.2), radius: 5, y: 2)
+            .shadow(color: .black.opacity(0.1), radius: 5, y: 2)
             
-            // Mensajes
+            // Área de mensajes (placeholder por ahora)
             ScrollView {
-                LazyVStack(spacing: 12) {
-                    ForEach(messages) { message in
-                        MessageBubble(message: message)
+                VStack(spacing: 16) {
+                    ForEach(0..<10) { i in
+                        HStack {
+                            if i % 2 == 0 {
+                                Spacer()
+                                Text("¡Hola! ¿Jugamos una partida?")
+                                    .padding(12)
+                                    .background(Color(red: 0.9, green: 0.3, blue: 0.2))
+                                    .foregroundColor(.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                            } else {
+                                Text("¡Claro! Dame 5 minutos")
+                                    .padding(12)
+                                    .background(Color(.systemGray5))
+                                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                                Spacer()
+                            }
+                        }
+                        .padding(.horizontal)
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
+                .padding(.vertical)
             }
-            .background(Color(.systemBackground))
             
             // Campo de entrada de mensaje
             HStack(spacing: 12) {
@@ -65,24 +63,25 @@ struct ChatView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(20)
                 
-                Button(action: sendMessage) {
+                Button(action: {
+                    // Aquí iría la lógica para enviar el mensaje
+                    if !messageText.isEmpty {
+                        messageText = ""
+                    }
+                }) {
                     Image(systemName: "paperplane.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        .foregroundColor(.white)
+                        .padding(10)
+                        .background(Color(red: 0.9, green: 0.3, blue: 0.2))
+                        .clipShape(Circle())
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding()
             .background(Color(.systemBackground))
         }
-        .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    private func sendMessage() {
-        guard !messageText.isEmpty else { return }
-        let newMessage = Message(content: messageText, isFromCurrentUser: true, timestamp: "Ahora")
-        messages.append(newMessage)
-        messageText = ""
+        .sheet(item: $selectedUser) { user in
+            UserDetailView(user: user)
+        }
     }
 }
 

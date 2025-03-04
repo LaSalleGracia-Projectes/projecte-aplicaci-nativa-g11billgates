@@ -5,6 +5,7 @@ struct MainScreenView: View {
     @State private var showLikeOverlay = false
     @State private var showDislikeOverlay = false
     @State private var showSettings = false
+    @State private var selectedUser: User?
     
     var body: some View {
         NavigationStack {
@@ -43,23 +44,30 @@ struct MainScreenView: View {
                     // Card Stack or Message
                     ZStack {
                         if viewModel.currentIndex < viewModel.users.count {
-                            CardView(user: viewModel.users[viewModel.currentIndex]) {
-                                withAnimation(.spring()) {
-                                    showLikeOverlay = true
-                                    viewModel.likeUser()
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        showLikeOverlay = false
+                            CardView(
+                                user: viewModel.users[viewModel.currentIndex],
+                                onLike: {
+                                    withAnimation(.spring()) {
+                                        showLikeOverlay = true
+                                        viewModel.likeUser()
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            showLikeOverlay = false
+                                        }
                                     }
-                                }
-                            } onDislike: {
-                                withAnimation(.spring()) {
-                                    showDislikeOverlay = true
-                                    viewModel.dislikeUser()
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        showDislikeOverlay = false
+                                },
+                                onDislike: {
+                                    withAnimation(.spring()) {
+                                        showDislikeOverlay = true
+                                        viewModel.dislikeUser()
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            showDislikeOverlay = false
+                                        }
                                     }
+                                },
+                                onNameTap: { user in
+                                    selectedUser = user
                                 }
-                            }
+                            )
                             .transition(AnyTransition.asymmetric(
                                 insertion: .opacity,
                                 removal: .opacity
@@ -141,13 +149,16 @@ struct MainScreenView: View {
             }
             .background(Color(.systemGray6))
             .navigationBarHidden(true)
-        }
-        .sheet(isPresented: $showSettings) {
-            SettingsView()
-        }
-        .fullScreenCover(isPresented: $viewModel.showMatch) {
-            if let matchedUser = viewModel.matchedUser {
-                MatchView(matchedUser: matchedUser, isPresented: $viewModel.showMatch)
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
+            }
+            .sheet(item: $selectedUser) { user in
+                UserDetailView(user: user)
+            }
+            .fullScreenCover(isPresented: $viewModel.showMatch) {
+                if let matchedUser = viewModel.matchedUser {
+                    MatchView(matchedUser: matchedUser, isPresented: $viewModel.showMatch)
+                }
             }
         }
     }
@@ -157,6 +168,7 @@ struct CardView: View {
     let user: User
     let onLike: () -> Void
     let onDislike: () -> Void
+    let onNameTap: (User) -> Void
     
     @State private var offset = CGSize.zero
     @State private var color = Color.black
@@ -190,8 +202,13 @@ struct CardView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     // Nombre y edad
                     HStack(spacing: 8) {
-                        Text(user.name)
-                            .font(.system(size: 26, weight: .bold))
+                        Button(action: {
+                            onNameTap(user)
+                        }) {
+                            Text(user.name)
+                                .font(.system(size: 26, weight: .bold))
+                                .foregroundColor(.primary)
+                        }
                         Text("\(user.age)")
                             .font(.system(size: 24))
                             .foregroundColor(.gray)
