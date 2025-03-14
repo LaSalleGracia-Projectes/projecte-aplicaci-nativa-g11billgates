@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct User: Identifiable, Codable {
     let id = UUID()
@@ -18,6 +19,17 @@ struct User: Identifiable, Codable {
         self.games = games
         self.profileImage = profileImage
         self.elo = elo
+    }
+    
+    // Codificación personalizada para la API
+    enum CodingKeys: String, CodingKey {
+        case name = "Nombre"
+        case age = "Edad"
+        case gender = "Genero"
+        case description = "Descripcion"
+        case games = "Juegos"
+        case profileImage = "FotoPerfil"
+        case elo = "ELO"
     }
 }
 
@@ -50,5 +62,37 @@ extension User {
             profileImage: profileImage,
             elo: elo
         )
+    }
+    
+    // Función para obtener el rango de ELO
+    func getEloRank() -> String {
+        switch elo {
+        case 0...999:
+            return "Bronce"
+        case 1000...1499:
+            return "Plata"
+        case 1500...1999:
+            return "Oro"
+        case 2000...2499:
+            return "Platino"
+        default:
+            return "Diamante"
+        }
+    }
+    
+    // Función para obtener el color del rango
+    func getEloColor() -> Color {
+        switch elo {
+        case 0...999:
+            return .brown
+        case 1000...1499:
+            return .gray
+        case 1500...1999:
+            return .yellow
+        case 2000...2499:
+            return .blue
+        default:
+            return .purple
+        }
     }
 } 
