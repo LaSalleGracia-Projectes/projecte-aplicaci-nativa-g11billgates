@@ -95,7 +95,8 @@ async function configurarValidacion(database) {
             Contraseña: { bsonType: "string" },
             FotoPerfil: { bsonType: ["string", "null"] },
             Edad: { bsonType: ["int", "number", "null"] },
-            Region: { bsonType: ["string", "null"] }
+            Region: { bsonType: ["string", "null"] },
+            ELO: { bsonType: ["int", "number"], default: 1000 }
           }
         }
       },
@@ -550,6 +551,61 @@ app.post('/forgot-password', async (req, res) => {
             details: error.message
         });
     }
+});
+
+// Endpoint para obtener usuarios filtrados por ELO
+app.get('/usuarios/filtrados', async (req, res) => {
+  try {
+    const { eloUsuario, rangoPermitido = 300 } = req.query;
+    const eloMin = parseInt(eloUsuario) - parseInt(rangoPermitido);
+    const eloMax = parseInt(eloUsuario) + parseInt(rangoPermitido);
+
+    const database = client.db(dbName);
+    const usuarios = await database.collection('usuario')
+      .find({
+        ELO: {
+          $gte: eloMin,
+          $lte: eloMax
+        }
+      })
+      .project({
+        Contraseña: 0,
+        Correo: 0
+      })
+      .toArray();
+
+    res.json(usuarios);
+  } catch (error) {
+    console.error('Error al obtener usuarios filtrados:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Endpoint para actualizar el ELO de un usuario
+app.put('/usuarios/:id/elo', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nuevoElo } = req.body;
+
+    if (!nuevoElo) {
+      return res.status(400).json({ error: 'El nuevo ELO es requerido' });
+    }
+
+    const database = client.db(dbName);
+    const resultado = await database.collection('usuario').updateOne(
+      { IDUsuario: parseInt(id) },
+      { $set: { ELO: parseInt(nuevoElo) } }
+    );
+
+    if (resultado.matchedCount === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.json({ mensaje: 'ELO actualizado con éxito' });
+  } catch (error) {
+    console.error('Error al actualizar ELO:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
 
 // Start server
